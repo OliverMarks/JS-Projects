@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    background-color: #1B244A;
+    font-family: "Orbitron";
+    
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    
+}
+
+
+
+.homeBox, .awayBox {
+    color: #F94F6D;
+    font-family: "Orbitron";
+    background-color: black;
+    height: 250px; 
+    width: 400px;
+    text-align: center;
+    font-size: 200px;
+    border-radius: 20px;
+    
+}
+
+#winning {
+    border-style: solid; 
+    border-color: yellow;
+    border-width: 5px;
+
+}
+
+
+
+h3 {
+    color: white;
+    text-align: center;
+    font-size: 54px;
+    font-family: "Orbitron";
+}
+
+.a-btns  > button {
+    height: 20%;
+    width: 30%;
+    border-radius: 20px;
+    margin-left: 2%;
+    margin-top: 2%;
+    padding: 5%;
+    align-items: center;
+    justify-content: center;
+    background-color: #1B244A;
+    border: 5px solid #9AABD8;
+    color: #9AABD8;
+    font-size: larger;
+    cursor: pointer;
+    font-family: "Orbitron";
+    
+}
+
+.new-btn { 
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.new-btn > button {
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+   margin: 2%;
+    align-items: center;
+    justify-content: center;
+    background-color: #1B244A;
+    border: 5px solid #9AABD8;
+    color: #9AABD8;
+    font-size: larger;
+    cursor: pointer;
+    font-family: "Orbitron";
+}
