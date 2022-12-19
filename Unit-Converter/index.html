@@ -12,27 +12,29 @@
     <div class="wrapper">
         
         <div class="header">
-        <h1>Unit Converter</h1>
-        <input type="number" id="input">
+        <h1>Metric/Imperial Unit Converter</h1>
+        <input type="number" id="input" onchange="lengthConversion(input.value)
+        volumeConversion(input.value)
+        massConversion(input.value)">
         <button id="convert-btn">Convert</button>
         </div>
 
         <div class="unit-types">
         
             <div class="unit">
-            <h2>Length</h2>
+            <h2>Length (Meter/Feet)</h2>
             <p id="lengthConversion"></p>
             </div>
         
 
         <div class="unit">
-            <h2>Volume</h2>
+            <h2>Volume (Liters/Gallons)</h2>
             <p id="volumeConversion"></p>
         
         </div>
 
         <div class="unit">
-            <h2>Mass</h2>
+            <h2>Mass (Kilograms/Pounds)</h2>
             <p id="massConversion"></p>
         </div>
         </div>
