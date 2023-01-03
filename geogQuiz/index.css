@@ -1,10 +1,15 @@
 body {
   font-family: 'Chivo Mono', monospace;
-  background-image: url(imgs/map.jpg);
+  background-color: rgba(31, 41, 55, 1);
+  background-image: url(imgs/map1.png);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center center;
+  background-position: center, center;
   font-size: 32px;
+  display: flex;
+  flex-direction: column;
+    justify-content: center;
+    align-items: center;
   
 
 
@@ -12,59 +17,82 @@ body {
 }
 
 .container {
+    margin-top: 6%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    /* border-color: whitesmoke;
+    border-width: 8px;
+    border-style: solid; */
+    width: fit-content;
+    max-width: 400px;
+    min-width: 400px;
+    max-height: 700px;
+    min-height: 700px;
+    height: fit-content;
+    border-radius: 12px;
+    background-color: rgb(254, 251, 251, 0.2)
+    
+    
 }
 
 
 h1 {
-   color: black;
+   color: white; 
     font-size: 48px;
-    border-color: black;
+    border-color: whitesmoke;
     border-width: 8px;
     border-style: solid;
+    border-radius: 12px;
+
 }
 
 .question {
-    border-color: black;
-    border-width: 0.1em;
-    border-style: solid;
+    
     background-color: white;
     width: fit-content;
-    font-size: 18px;
+    font-size: 30px;
     padding: 0.65em; 
-    margin-bottom: 1em;
-    margin-top: 0.1em; 
+    margin-bottom: 0.7em;
+    margin-top: 0.1em;
+    border-radius: 12px;
+ 
 }
 
 
 
 button {
-    height:100px; 
+    height:50px; 
     width:300px;
-    border-color: black;
-    border-width: 8px;
     border-style: solid;
     background-color: white;
-    margin: 1em;
+    margin: 3px; 
     cursor: pointer;
     font-size: 20px;
-    padding: 1px;
+    padding: 0; 
+    border-radius: 12px;
+    font-weight: 800;
+    
+    
+
     
 }
 
 .score {
-    margin-top: 50px;
+    margin-top: 20px;
     padding-top: 15px;
-    height: 50px; 
+    height: 40px; 
     width:100px;
-    border-color: black;
+    border-color: whitesmoke;
+    color: whitesmoke;
     border-width: 8px;
     border-style: solid;
     text-justify: center;
    text-align: center;
+   border-radius: 12px;
+
    
 }
 
@@ -84,5 +112,10 @@ button {
 
 #message {
     display: none;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 600;
+    height: fit-content;
+    width:fit-content
    
 }

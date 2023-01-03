@@ -61,7 +61,7 @@ function checkAnswer() {
     console.log(`Correct! ${city1[0]} has a larger population than ${city2[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
     getMessage(happy)
-    messageElement.classList.remove("incorrect")
+    messageElement.classList.remove("incorrect") // toggle might be better for these?
     messageElement.classList.add("correct")
     score++
   } else {
@@ -80,7 +80,7 @@ function checkAnswer2() {
     console.log(`Correct! ${city2[0]} has a larger population than ${city1[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
     getMessage(happy)
-    messageElement.classList.remove("incorrect")
+    messageElement.classList.remove("incorrect") 
     messageElement.classList.add("correct")
     score++
   } else {
