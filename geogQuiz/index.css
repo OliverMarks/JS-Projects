@@ -1,0 +1,82 @@
+body {
+  font-family: 'Chivo Mono', monospace;
+  background-image: url(imgs/map.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  font-size: 32px;
+  
+
+
+    
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+h1 {
+   color: black;
+    font-size: 48px;
+    border-color: black;
+    border-width: 8px;
+    border-style: solid;
+}
+
+.question {
+    border-color: black;
+    border-width: 0.1em;
+    border-style: solid;
+    background-color: white;
+    width: fit-content;
+    font-size: 18px;
+    padding: 0.65em; 
+    margin-bottom: 1em;
+    margin-top: 0.1em; 
+}
+
+
+
+button {
+    height:100px; 
+    width:300px;
+    border-color: black;
+    border-width: 8px;
+    border-style: solid;
+    background-color: white;
+    margin: 1em;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 1px;
+    
+}
+
+.score {
+    margin-top: 50px;
+    padding-top: 15px;
+    height: 50px; 
+    width:100px;
+    border-color: black;
+    border-width: 8px;
+    border-style: solid;
+    text-justify: center;
+   text-align: center;
+   
+}
+
+.correct {
+    border-style: solid; 
+    border-color: rgb(47, 255, 0);
+    border-width: 8px;
+
+}
+
+.incorrect {
+    border-style: solid; 
+    border-color: rgb(255, 30, 0);
+    border-width: 8px;
+}
