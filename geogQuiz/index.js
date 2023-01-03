@@ -67,11 +67,15 @@ function checkAnswer() {
     console.log(`Correct! ${city1[0]} has a larger population than ${city2[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
     getMessage(happy)
+    messageElement.classList.remove("incorrect")
+    messageElement.classList.add("correct")
     score++
   } else {
     console.log(`Incorrect. ${city1[0]} has a smaller population than ${city2[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
     getMessage(sad)
+    messageElement.classList.remove("correct")
+    messageElement.classList.add("incorrect")
   }
   scoreElement.textContent = `${score}`
   playQuiz()
@@ -82,11 +86,15 @@ function checkAnswer2() {
     console.log(`Correct! ${city2[0]} has a larger population than ${city1[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
     getMessage(happy)
+    messageElement.classList.remove("incorrect")
+    messageElement.classList.add("correct")
     score++
   } else {
     console.log(`Incorrect. ${city2[0]} has a smaller population than ${city1[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
     getMessage(sad)
+    messageElement.classList.remove("correct")
+    messageElement.classList.add("incorrect")
   }
   scoreElement.textContent = `${score}`
   playQuiz()
@@ -95,6 +103,7 @@ function checkAnswer2() {
 // renders game 
   function playQuiz() {
     [city1, city2] = getCities()
+    console.log(city1)
     questionElement.textContent = `Which city has a larger population: ${city1[0]} or ${city2[0]}?`
     button1.textContent = city1[0]
     button2.textContent = city2[0]
@@ -116,6 +125,7 @@ function checkAnswer2() {
     const city1 = [getNestedValue(cities, city1Key, "name"), getNestedValue(cities, city1Key, "population")]
     const city2 = [getNestedValue(cities, city2Key, "name"), getNestedValue(cities, city2Key, "population")]
     return [city1, city2]
+    
   }
 
 
