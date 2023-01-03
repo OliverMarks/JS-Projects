@@ -1,6 +1,6 @@
 body {
   font-family: 'Chivo Mono', monospace;
-  background-color: rgba(31, 41, 55, 1);
+  background-color: rgba(37, 52, 73, 0.962); 
   background-image: url(imgs/map1.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -17,20 +17,17 @@ body {
 }
 
 .container {
-    margin-top: 6%;
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    /* border-color: whitesmoke;
-    border-width: 8px;
-    border-style: solid; */
     width: fit-content;
     max-width: 400px;
     min-width: 400px;
-    max-height: 700px;
-    min-height: 700px;
+    max-height: 600px;
+    min-height: 600px;
     height: fit-content;
     border-radius: 12px;
     background-color: rgb(254, 251, 251, 0.2)
