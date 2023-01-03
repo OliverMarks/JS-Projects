@@ -16,8 +16,8 @@ let score = 0
 let city1
 let city2
 
-const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7 - incredible"]
-const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?"]
+const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7 - incredible", "Good Gravy!", "Check out the Geog-chops on this fella", "Unbelievable Jeff"]
+const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?", "Just shite", "Utterly Ridiculous", "Wasting everyone's time" ]
 
 
 
@@ -28,12 +28,6 @@ const getData = async () => {
   cities = data
 
   playQuiz();
-
- 
-  // console.log(cities);
-
-//   var keyNames = Object.keys(cities);
-// console.log(keyNames); // Outputs ["a","b","c"]
   
 };
 
