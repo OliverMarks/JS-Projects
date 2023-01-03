@@ -14,12 +14,15 @@ let input = document.getElementById("input")
 
 
 // On click of convert button calls all conversion functions
-convertBtn.addEventListener("click", function(){
-    // conversion(input.value)
-    lengthConversion(input.value)
-    volumeConversion(input.value)
-    massConversion(input.value)
+convertBtn.addEventListener("click", function() {
+    lengthConversion(input.value),
+volumeConversion(input.value),
+massConversion(input.value)
+
 })
+    // conversion(input.value)
+    
+
 
 // on use of up and down arrows in the input field also calls conversion functions w/o need to refresh
 // Would like to bring this into the JS rather than HTML, unsure how to target these arrows

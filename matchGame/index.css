@@ -1,0 +1,42 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    
+}
+
+.cardContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: auto auto auto auto; 
+    max-width: 600px;
+    gap: 25px;
+}
+
+.frontCards {
+    position: relative;
+    
+    right: 112px;
+    display: grid;
+    grid-template-columns: auto auto auto auto; 
+    max-width: 600px;
+    gap: 25px;
+    z-index: 10;
+    height: 200px;
+    width: 150px;
+}
+
+.card {
+    height: 200px;
+    width: 150px;
+    
+}
+
+
+
+.hidden {
+    display: none;
+}
