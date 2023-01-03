@@ -80,3 +80,8 @@ button {
     border-color: rgb(255, 30, 0);
     border-width: 8px;
 }
+
+
+#message {
+    display: none;
+}

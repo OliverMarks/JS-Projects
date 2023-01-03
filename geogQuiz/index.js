@@ -9,12 +9,15 @@ const button1 = document.querySelector("#answer-btn-1")
 const button2 = document.querySelector("#answer-btn-2")
 const questionElement = document.querySelector("#question")
 const scoreElement = document.querySelector("#score")
+const messageElement = document.querySelector("#message")
 
 let cities
 let score = 0
 let city1
 let city2
 
+const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7 - incredible"]
+const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?"]
 
 
 
@@ -49,20 +52,32 @@ button2.addEventListener("click", function() {
   
 });
 
+
+function getMessage(messageArray) {
+  const randomIndex = Math.floor(Math.random() * messageArray.length)
+    messageElement.textContent = messageArray[randomIndex]
+    messageElement.style.display ="block"
+  }
+  
+
+
+// check the answer clicked 
 function checkAnswer() {
   if (city1[1] > city2[1]) {
     console.log(`Correct! ${city1[0]} has a larger population than ${city2[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
+    getMessage(happy)
     score++
   } else {
     console.log(`Incorrect. ${city1[0]} has a smaller population than ${city2[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
+    getMessage(sad)
   }
   scoreElement.textContent = `${score}`
   playQuiz()
 }
 
-
+// renders game 
   function playQuiz() {
     [city1, city2] = getCities()
     questionElement.textContent = `Which city has a larger population: ${city1[0]} or ${city2[0]}?`
@@ -76,7 +91,7 @@ function checkAnswer() {
     }
     return null;
   }
-  
+  // gets the cities for the questions randomly from json data includes their name and population data 
   function getCities() {
     const cityKeys = Object.keys(cities);
     const randomIndex1 = Math.floor(Math.random() * cityKeys.length)
