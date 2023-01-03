@@ -47,7 +47,7 @@ button1.addEventListener("click", function() {
 });
 
 button2.addEventListener("click", function() {
-  checkAnswer()
+  checkAnswer2()
   
   
 });
@@ -70,6 +70,21 @@ function checkAnswer() {
     score++
   } else {
     console.log(`Incorrect. ${city1[0]} has a smaller population than ${city2[0]}`)
+    console.log(city1[0], city1[1], city2[0], city2[1])
+    getMessage(sad)
+  }
+  scoreElement.textContent = `${score}`
+  playQuiz()
+}
+
+function checkAnswer2() {
+  if (city2[1] > city1[1]) {
+    console.log(`Correct! ${city2[0]} has a larger population than ${city1[0]}`)
+    console.log(city1[0], city1[1], city2[0], city2[1])
+    getMessage(happy)
+    score++
+  } else {
+    console.log(`Incorrect. ${city2[0]} has a smaller population than ${city1[0]}`)
     console.log(city1[0], city1[1], city2[0], city2[1])
     getMessage(sad)
   }
