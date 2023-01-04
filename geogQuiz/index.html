@@ -9,20 +9,38 @@
     <title>Geog Quiz</title>
 </head>
 <body>
-    <div class ="container">
-    <h1>Geog Quiz</h1>
+    <div class="startOfGame" id="start-of-game">
+        <h1>Geog Quiz</h1>
+            <p>How well do you know the cities of the world?</p>
+            <p>You have 60 seconds, 3 incorrect answers in a row and you're out!</p>
+            <button id="start-btn">Start Quiz</button>
+
+    </div>
+
+
+
+
+
+    <div class ="container" id="container">
     
-        
+    
+        <div class="quizWrapper" id="quiz-wrapper">
+        <span id="timer"></span>
         <div class="question" id="question"></div>
-        <span class="question" id="message"></span>
+        <span class="message" id="message">Lets goooo</span>
         <button class="answer-btn" id="answer-btn-1"></button>
         <button class="answer-btn" id="answer-btn-2"></button>
-
-    <div class="score" id="score"> </div>
+        
+    <div class="score correct" id="score"> </div>
+    <div class="score incorrect" id="incorrect-score"> </div>
     
+</div>
 
-
-
+<div class="endOfGame" id="endOfGame">
+    <h1>Game Over!</h1>
+    <button id="restart-btn"> Go again?</button> 
+    
+    </div>
 
     </div>
     

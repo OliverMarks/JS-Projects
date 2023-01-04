@@ -1,18 +1,21 @@
-
-
-
-
-
-
-
+const startOfGame = document.getElementById("start-of-game")
+const quizWrapper = document.getElementById("quiz-wrapper")
+const startBtn = document.getElementById("start-btn")
+const container = document.getElementById("container")
 const button1 = document.querySelector("#answer-btn-1")
 const button2 = document.querySelector("#answer-btn-2")
 const questionElement = document.querySelector("#question")
 const scoreElement = document.querySelector("#score")
+const incorrectScoreElement = document.getElementById("incorrect-score")
 const messageElement = document.querySelector("#message")
+const endOfGame = document.getElementById("endOfGame")
+const restartBtn = document.getElementById("restart-btn")
+const timer = document.getElementById("timer")
 
 let cities
 let score = 0
+let incorrectScore = 0
+let totalIncorrect = 0 
 let city1
 let city2
 
@@ -20,6 +23,40 @@ const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7
 const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?", "Just shite", "Utterly Ridiculous", "Wasting everyone's time" ]
 
 
+function startGame() {
+  score = 0;
+  incorrectScore = 0;
+  totalIncorrect = 0;
+  startOfGame.style.display = "none";
+  endOfGame.style.display = "none";
+  quizWrapper.style.display = "flex";
+  container.style.display = "flex";
+  startTimer();
+  playQuiz();
+}
+
+// renders game 
+function playQuiz() {
+  if (incorrectScore === 3) {
+    endGame()
+  } else {
+  [city1, city2] = getCities()
+  questionElement.textContent = `Which city has a larger population: ${city1[0]} or ${city2[0]}?`
+  button1.textContent = city1[0]
+  button2.textContent = city2[0]
+}}
+
+function startTimer() {
+  let timeLeft = 60;
+  let timerInterval = setInterval(function() {
+    timer.textContent = `Time: ${timeLeft} secs`;
+    timeLeft--;
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      endGame();
+    }
+  }, 1000);
+}
 
 const getData = async () => {
   const response = await fetch('city.json');
@@ -31,77 +68,66 @@ const getData = async () => {
   
 };
 
-getData();
-console.log(cities)
-
 button1.addEventListener("click", function() {
-  checkAnswer()
- 
-
-});
+  checkAnswer(city1, city2)
+})
 
 button2.addEventListener("click", function() {
-  checkAnswer2()
+  checkAnswer(city2, city1)
+})
+
+startBtn.addEventListener("click", function(){
+  startGame()
+})
+
+restartBtn.addEventListener("click", function(){ 
+  startGame()
   
-  
-});
+})
+
+
+
+getData();
+
+
+
 
 
 function getMessage(messageArray) {
   const randomIndex = Math.floor(Math.random() * messageArray.length)
     messageElement.textContent = messageArray[randomIndex]
-    messageElement.style.display ="block"
+    messageElement.style.display ="flex"
   }
   
 
 
 // check the answer clicked 
-function checkAnswer() {
-  if (city1[1] > city2[1]) {
-    console.log(`Correct! ${city1[0]} has a larger population than ${city2[0]}`)
-    console.log(city1[0], city1[1], city2[0], city2[1])
+function checkAnswer(cityX, cityY) {
+  if (cityX[1] > cityY[1]) {
+    console.log(`Correct! ${cityX[0]} has a larger population than ${cityY[0]}`)
+    console.log(cityX[0], cityX[1], cityY[0], cityY[1])
     getMessage(happy)
     messageElement.classList.remove("incorrect") // toggle might be better for these?
     messageElement.classList.add("correct")
     score++
+    incorrectScore = 0
   } else {
-    console.log(`Incorrect. ${city1[0]} has a smaller population than ${city2[0]}`)
-    console.log(city1[0], city1[1], city2[0], city2[1])
+    console.log(`Incorrect. ${cityX[0]} has a smaller population than ${cityY[0]}`)
+    console.log(cityX[0], cityX[1], cityY[0], cityY[1])
     getMessage(sad)
     messageElement.classList.remove("correct")
     messageElement.classList.add("incorrect")
+    incorrectScore++
+    totalIncorrect++
   }
   scoreElement.textContent = `${score}`
+  incorrectScoreElement.textContent = `${incorrectScore}`
   playQuiz()
 }
 
-function checkAnswer2() {
-  if (city2[1] > city1[1]) {
-    console.log(`Correct! ${city2[0]} has a larger population than ${city1[0]}`)
-    console.log(city1[0], city1[1], city2[0], city2[1])
-    getMessage(happy)
-    messageElement.classList.remove("incorrect") 
-    messageElement.classList.add("correct")
-    score++
-  } else {
-    console.log(`Incorrect. ${city2[0]} has a smaller population than ${city1[0]}`)
-    console.log(city1[0], city1[1], city2[0], city2[1])
-    getMessage(sad)
-    messageElement.classList.remove("correct")
-    messageElement.classList.add("incorrect")
-  }
-  scoreElement.textContent = `${score}`
-  playQuiz()
-}
 
-// renders game 
-  function playQuiz() {
-    [city1, city2] = getCities()
-    console.log(city1)
-    questionElement.textContent = `Which city has a larger population: ${city1[0]} or ${city2[0]}?`
-    button1.textContent = city1[0]
-    button2.textContent = city2[0]
-  }
+
+
 
   function getNestedValue(obj, key, nestedKey) {
     if (obj[key] && obj[key][nestedKey]) {
@@ -123,29 +149,19 @@ function checkAnswer2() {
   }
 
 
+  // end of game 
+  function endGame() {
+    quizWrapper.style.display = "none"
+    endOfGame.style.display = "flex"
+  endOfGame.innerHTML += `
+ 
+  <p>Final Score: ${score}</p>
+  
+  <p>Total Wrong: ${totalIncorrect}</p>
+
+  <p>Rating: Hot stuff</p>`
+  }
 
 
 
-
-
-
-
-
-
-
-    
-
-
-
-    
-    
-
-
-
-
-        
-
-
-
-
-
+  
