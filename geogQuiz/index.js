@@ -1,3 +1,4 @@
+// Declare variables for DOM elements
 const startOfGame = document.getElementById("start-of-game")
 const quizWrapper = document.getElementById("quiz-wrapper")
 const startBtn = document.getElementById("start-btn")
@@ -12,17 +13,24 @@ const endOfGame = document.getElementById("endOfGame")
 const restartBtn = document.getElementById("restart-btn")
 const timer = document.getElementById("timer")
 
-let cities
-let score = 0
-let incorrectScore = 0
-let totalIncorrect = 0 
-let city1
-let city2
+let cities // will store the data from the city.json file
+let score = 0 // player's current score
+let incorrectScore = 0 // number of consecutive incorrect answers
+let totalIncorrect = 0 // total number of incorrect answers
+let city1 // first city to compare in the quiz
+let city2 // second city to compare in the quiz
 
+// Arrays to store possible messages to display
 const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7 - incredible", "Good Gravy!", "Check out the Geog-chops on this fella", "Unbelievable Jeff"]
 const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?", "Just shite", "Utterly Ridiculous", "Wasting everyone's time" ]
 
 
+
+/**
+ * Hides the start screen and starts the quiz.
+ * Resets the score and number of incorrect answers.
+ * Calls the `startTimer` and `playQuiz` functions.
+ */
 function startGame() {
   score = 0;
   incorrectScore = 0;
@@ -35,7 +43,13 @@ function startGame() {
   playQuiz();
 }
 
-// renders game 
+
+
+/**
+ * Renders the quiz by selecting two cities to compare and displaying
+ * their names as the quiz question.
+ * If the player has answered three questions incorrectly in a row, ends the game.
+ */
 function playQuiz() {
   if (incorrectScore === 3) {
     endGame()
@@ -46,6 +60,11 @@ function playQuiz() {
   button2.textContent = city2[0]
 }}
 
+
+
+
+
+// Timer function
 function startTimer() {
   let timeLeft = 60;
   let timerInterval = setInterval(function() {
@@ -54,10 +73,15 @@ function startTimer() {
     if (timeLeft < 0) {
       clearInterval(timerInterval);
       endGame();
+      return
     }
   }, 1000);
 }
 
+/**
+ * Fetches data from city.json and stores it in the `cities` variable.
+ * Then calls the `playQuiz` function to start the quiz.
+ */
 const getData = async () => {
   const response = await fetch('city.json');
   const data = await response.json();
@@ -68,6 +92,10 @@ const getData = async () => {
   
 };
 
+// Fetches data from city.json and starts the quiz
+getData();
+
+// Event listeners for button clicks
 button1.addEventListener("click", function() {
   checkAnswer(city1, city2)
 })
@@ -87,11 +115,13 @@ restartBtn.addEventListener("click", function(){
 
 
 
-getData();
 
 
 
 
+
+
+ // Displays a random message from the given message array.
 
 function getMessage(messageArray) {
   const randomIndex = Math.floor(Math.random() * messageArray.length)
@@ -101,7 +131,13 @@ function getMessage(messageArray) {
   
 
 
-// check the answer clicked 
+/**
+ * Compares the population of two cities and displays a message indicating whether
+ * the player's answer was correct or incorrect.
+ * Increments the score if the answer was correct and resets the number of consecutive
+ * incorrect answers to 0.
+ * Increments the number of consecutive incorrect answers if the answer was incorrect.
+ */ 
 function checkAnswer(cityX, cityY) {
   if (cityX[1] > cityY[1]) {
     console.log(`Correct! ${cityX[0]} has a larger population than ${cityY[0]}`)
@@ -127,7 +163,13 @@ function checkAnswer(cityX, cityY) {
 
 
 
-
+/**
+ * Returns the value of a nested object key.
+ * @param {object} obj - The object to search.
+ * @param {string} key - The key to search for in the object.
+ * @param {string} nestedKey - The nested key to search for in the object.
+ * @returns {any} The value of the nested key, or null if not found.
+ */
 
   function getNestedValue(obj, key, nestedKey) {
     if (obj[key] && obj[key][nestedKey]) {
@@ -135,7 +177,14 @@ function checkAnswer(cityX, cityY) {
     }
     return null;
   }
-  // gets the cities for the questions randomly from json data includes their name and population data 
+
+
+/**
+ * Gets two cities for the quiz by randomly selecting keys from the `cities` object.
+ * The cities' names and population data are extracted using the `getNestedValue` function.
+ * @returns {array} An array of two city arrays, each containing a city's name and population.
+ */
+
   function getCities() {
     const cityKeys = Object.keys(cities);
     const randomIndex1 = Math.floor(Math.random() * cityKeys.length)
@@ -149,7 +198,13 @@ function checkAnswer(cityX, cityY) {
   }
 
 
-  // end of game 
+  /**
+ * Hides the quiz and displays the end game screen.
+ * The final score and number of incorrect answers are displayed.
+ * The rating is currently hardcoded to "Hot stuff".
+ * A function score/totalIncorrect needs to be made to determine rating
+ */
+ 
   function endGame() {
     quizWrapper.style.display = "none"
     endOfGame.style.display = "flex"
