@@ -10,8 +10,11 @@ const scoreElement = document.querySelector("#score")
 const incorrectScoreElement = document.getElementById("incorrect-score")
 const messageElement = document.querySelector("#message")
 const endOfGame = document.getElementById("endOfGame")
-const restartBtn = document.getElementById("restart-btn")
 const timer = document.getElementById("timer")
+let gameEnded = false;
+
+
+const topics = ['population', 'longitude', 'latitude']
 
 let cities // will store the data from the city.json file
 let score = 0 // player's current score
@@ -32,9 +35,14 @@ const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to scho
  * Calls the `startTimer` and `playQuiz` functions.
  */
 function startGame() {
+  gameEnded = false;
   score = 0;
   incorrectScore = 0;
   totalIncorrect = 0;
+  messageElement.textContent = ""
+  messageElement.classList.remove("incorrect", "correct") 
+  scoreElement.textContent = `${score}`
+  incorrectScoreElement.textContent = `${incorrectScore}`
   startOfGame.style.display = "none";
   endOfGame.style.display = "none";
   quizWrapper.style.display = "flex";
@@ -51,13 +59,21 @@ function startGame() {
  * If the player has answered three questions incorrectly in a row, ends the game.
  */
 function playQuiz() {
+  const questionDict = {
+    'population': 'Which city has a larger population:',
+    'longitude': 'Which city is furthest East?: ',
+    'latitude': 'Which city is furthest North?: '
+  }
+
+  let currentTopic = topics[Math.floor(Math.random() * topics.length)]
   if (incorrectScore === 3) {
     endGame()
   } else {
-  [city1, city2] = getCities()
-  questionElement.textContent = `Which city has a larger population: ${city1[0]} or ${city2[0]}?`
-  button1.textContent = city1[0]
-  button2.textContent = city2[0]
+  [city1, city2] = getCities(currentTopic)
+
+  questionElement.textContent = `${questionDict[currentTopic]} ${city1.name} or ${city2.name}?`
+  button1.textContent = city1.name
+  button2.textContent = city2.name
 }}
 
 
@@ -70,9 +86,9 @@ function startTimer() {
   let timerInterval = setInterval(function() {
     timer.textContent = `Time: ${timeLeft} secs`;
     timeLeft--;
-    if (timeLeft < 0) {
+    if (timeLeft < 0 || gameEnded) {
       clearInterval(timerInterval);
-      endGame();
+      endGame('time');
       return
     }
   }, 1000);
@@ -84,10 +100,7 @@ function startTimer() {
  */
 const getData = async () => {
   const response = await fetch('city.json');
-  const data = await response.json();
-
-  cities = data
-
+  cities =  await response.json();
   playQuiz();
   
 };
@@ -108,10 +121,10 @@ startBtn.addEventListener("click", function(){
   startGame()
 })
 
-restartBtn.addEventListener("click", function(){ 
-  startGame()
-  
-})
+// restartBtn.addEventListener("click", function(){
+//   startGame()
+//
+// })
 
 
 
@@ -139,19 +152,20 @@ function getMessage(messageArray) {
  * Increments the number of consecutive incorrect answers if the answer was incorrect.
  */ 
 function checkAnswer(cityX, cityY) {
-  if (cityX[1] > cityY[1]) {
-    console.log(`Correct! ${cityX[0]} has a larger population than ${cityY[0]}`)
-    console.log(cityX[0], cityX[1], cityY[0], cityY[1])
+  if (cityX.answer > cityY.answer) {
+    console.log('Correct!')
+    console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
     getMessage(happy)
-    messageElement.classList.remove("incorrect") // toggle might be better for these?
+    messageElement.classList.remove("incorrect") 
     messageElement.classList.add("correct")
     score++
     incorrectScore = 0
   } else {
-    console.log(`Incorrect. ${cityX[0]} has a smaller population than ${cityY[0]}`)
-    console.log(cityX[0], cityX[1], cityY[0], cityY[1])
+    console.log('Incorrect')
+    console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
+    //set wrong answer
     getMessage(sad)
-    messageElement.classList.remove("correct")
+    messageElement.classList.remove("correct") 
     messageElement.classList.add("incorrect")
     incorrectScore++
     totalIncorrect++
@@ -160,6 +174,8 @@ function checkAnswer(cityX, cityY) {
   incorrectScoreElement.textContent = `${incorrectScore}`
   playQuiz()
 }
+
+
 
 
 
@@ -178,6 +194,23 @@ function checkAnswer(cityX, cityY) {
     return null;
   }
 
+  // function getNestedValue(obj, key, nestedKey, nestedNestedKey) {
+  //   if (nestedKey && nestedNestedKey) {
+  //     if (obj[key] && obj[key][nestedKey] && obj[key][nestedKey][nestedNestedKey]) {
+  //       return obj[key][nestedKey][nestedNestedKey];
+  //     }
+  //   } else if (nestedKey) {
+  //     if (obj[key] && obj[key][nestedKey]) {
+  //       return obj[key][nestedKey];
+  //     }
+  //   } else {
+  //     if (obj[key]) {
+  //       return obj[key];
+  //     }
+  //   }
+  //   return null;
+  // }
+
 
 /**
  * Gets two cities for the quiz by randomly selecting keys from the `cities` object.
@@ -185,16 +218,22 @@ function checkAnswer(cityX, cityY) {
  * @returns {array} An array of two city arrays, each containing a city's name and population.
  */
 
-  function getCities() {
+  function getCities(topic) {
     const cityKeys = Object.keys(cities);
     const randomIndex1 = Math.floor(Math.random() * cityKeys.length)
     const randomIndex2 = Math.floor(Math.random() * cityKeys.length)
     const city1Key = cityKeys[randomIndex1]
     const city2Key = cityKeys[randomIndex2]
-    const city1 = [getNestedValue(cities, city1Key, "name"), getNestedValue(cities, city1Key, "population")]
-    const city2 = [getNestedValue(cities, city2Key, "name"), getNestedValue(cities, city2Key, "population")]
+
+  const city1 = {
+      name: getNestedValue(cities, city1Key, "name"),
+      answer: getNestedValue(cities, city1Key, topic)
+  }
+  const city2 = {
+    name: getNestedValue(cities, city2Key, "name"),
+    answer: getNestedValue(cities, city2Key, topic)
+  }
     return [city1, city2]
-    
   }
 
 
@@ -205,18 +244,46 @@ function checkAnswer(cityX, cityY) {
  * A function score/totalIncorrect needs to be made to determine rating
  */
  
-  function endGame() {
+  function endGame(condition = 'gameOver') {
+    gameEnded = true;
     quizWrapper.style.display = "none"
     endOfGame.style.display = "flex"
-  endOfGame.innerHTML += `
+
+    const endGameBtn = document.createElement('button')
+    endGameBtn.textContent = 'start again'
+    endGameBtn.addEventListener('click', () => startGame())
+
+    // need to create all elements rather than innerhtml
+    // condition isnt working as intended 
+    endOfGame.innerHTML = `
  
+ <h1>${condition === 'time' ? 'Time up' : 'Game Over'}</h1>
   <p>Final Score: ${score}</p>
   
   <p>Total Wrong: ${totalIncorrect}</p>
 
-  <p>Rating: Hot stuff</p>`
+  <p>Rating: ${getRating(score, totalIncorrect)}</p>
+`
+
+    endOfGame.appendChild(endGameBtn)
   }
 
+  function getRating(right, wrong) {
+    const correctRatio = right/wrong 
+    console.log(correctRatio)
+    if (correctRatio < 1) {
+    return "Shocking"
+    } else if (correctRatio < 2){
+      return "Not great ay"
+    } else if (correctRatio < 3){
+      return "Not bad" 
+    } else if (correctRatio < 4){
+      return "Impressive" 
+      } else {
+        return "Superstar DJ"
+      }
+    } 
+  
 
-
+ 
   
