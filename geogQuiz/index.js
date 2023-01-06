@@ -1,5 +1,6 @@
 // Declare variables for DOM elements
 const startOfGame = document.getElementById("start-of-game")
+const daftAudio = document.getElementById("8bit-daft")
 const quizWrapper = document.getElementById("quiz-wrapper")
 const startBtn = document.getElementById("start-btn")
 const container = document.getElementById("container")
@@ -7,7 +8,7 @@ const button1 = document.querySelector("#answer-btn-1")
 const button2 = document.querySelector("#answer-btn-2")
 const questionElement = document.querySelector("#question")
 const scoreElement = document.querySelector("#score")
-// const incorrectScoreElement = document.getElementById("incorrect-score")
+
 const messageElement = document.querySelector("#message")
 const endOfGame = document.getElementById("endOfGame")
 const timer = document.getElementById("timer")
@@ -39,6 +40,7 @@ function startGame() {
   score = 0;
   incorrectScore = 0;
   totalIncorrect = 0;
+  daftAudio.play()
   messageElement.textContent = 
   messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
@@ -297,6 +299,17 @@ function incorrectIndicator(){
     } 
   
 
+    const muteButton = document.getElementById('mute-button');
 
+    muteButton.addEventListener('click', () => {
+      const audioElement = document.querySelector('audio');
+      audioElement.muted = !audioElement.muted;
+    
+      if (audioElement.muted) {
+        muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      } else {
+        muteButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+      }
+    })
  
   

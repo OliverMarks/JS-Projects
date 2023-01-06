@@ -33,6 +33,18 @@ body {
     background-color: rgb(254, 251, 251, 0.7)
 }
 
+#mute-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+  }
+  
+  #mute-button:hover {
+    color: #666;
+  }
+
 h1 {
     color: black;
      font-size: 48px;
