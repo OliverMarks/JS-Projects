@@ -40,7 +40,6 @@ function startGame() {
   score = 0;
   incorrectScore = 0;
   totalIncorrect = 0;
-  daftAudio.play()
   messageElement.textContent = 
   messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
@@ -120,6 +119,7 @@ button2.addEventListener("click", function() {
 
 startBtn.addEventListener("click", function(){
   startGame()
+  daftAudio.play()
 })
 
 // restartBtn.addEventListener("click", function(){
