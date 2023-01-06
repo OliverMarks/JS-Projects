@@ -84,7 +84,7 @@ function playQuiz() {
 function startTimer() {
   let timeLeft = 60;
   let timerInterval = setInterval(function() {
-    timer.textContent = `Time: ${timeLeft} secs`;
+    timer.textContent = `${timeLeft} secs`;
     timeLeft--;
     if (timeLeft < 0 || gameEnded) {
       clearInterval(timerInterval);
