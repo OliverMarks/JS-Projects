@@ -61,8 +61,8 @@ function startGame() {
 function playQuiz() {
   const questionDict = {
     'population': 'Which city has a larger population:',
-    'longitude': 'Which city is furthest East?: ',
-    'latitude': 'Which city is furthest North?: '
+    'longitude': 'Which city is furthest East: ',
+    'latitude': 'Which city is furthest North: '
   }
 
   let currentTopic = topics[Math.floor(Math.random() * topics.length)]
@@ -129,14 +129,6 @@ console.log(daftAudio.volume); // Outputs the current volume of the audio elemen
 //   startGame()
 //
 // })
-
-
-
-
-
-
-
-
 
  // Displays a random message from the given message array.
 
