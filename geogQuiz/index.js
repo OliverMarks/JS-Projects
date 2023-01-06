@@ -120,6 +120,9 @@ button2.addEventListener("click", function() {
 startBtn.addEventListener("click", function(){
   startGame()
   daftAudio.play()
+
+  console.log(audioElement.muted); // Outputs the current mute state of the audio element
+console.log(audioElement.volume); // Outputs the current volume of the audio element (a value between 0 and 1)
 })
 
 // restartBtn.addEventListener("click", function(){
