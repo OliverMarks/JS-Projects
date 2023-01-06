@@ -287,9 +287,12 @@ function incorrectIndicator(){
       return "Not bad" 
     } else if (correctRatio < 4){
       return "Impressive" 
-      } else {
+      } else if(correctRatio < 5) {
         return "Superstar DJ"
+      } else if (correctRatio < 6 && totalIncorrect === 0) {
+        return "PERFECTION"
       }
+    
     } 
   
 

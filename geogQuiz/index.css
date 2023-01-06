@@ -103,13 +103,18 @@ h1 {
     background-color: rgba(244, 8, 8, 0.6)
 }
 
+.green {
+    background-color: rgba(10, 249, 10, 0.2)
+
+}
+
 
 .question {
-    
+    text-align: center;
     justify-content: center;
     align-items: center;
     background-color: white;
-    min-height: 150px;
+    min-height: 125px;
     width: fit-content;
     font-size: 30px;
     padding: 0.65em; 
@@ -184,7 +189,6 @@ button {
     width:fit-content;
     background-color: white;
     min-height: 10px;
-    width: fit-content;
     font-size: 15px;
     padding: 0.65em; 
     margin-bottom: 0.7em;
@@ -195,8 +199,6 @@ button {
 }
 
 #timer {
-    
-    
     text-justify: center;
    text-align: center;
     background-color: white;
