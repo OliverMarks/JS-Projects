@@ -7,7 +7,7 @@ const button1 = document.querySelector("#answer-btn-1")
 const button2 = document.querySelector("#answer-btn-2")
 const questionElement = document.querySelector("#question")
 const scoreElement = document.querySelector("#score")
-const incorrectScoreElement = document.getElementById("incorrect-score")
+// const incorrectScoreElement = document.getElementById("incorrect-score")
 const messageElement = document.querySelector("#message")
 const endOfGame = document.getElementById("endOfGame")
 const timer = document.getElementById("timer")
@@ -39,10 +39,10 @@ function startGame() {
   score = 0;
   incorrectScore = 0;
   totalIncorrect = 0;
-  messageElement.textContent = ""
+  messageElement.textContent = 
   messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
-  incorrectScoreElement.textContent = `${incorrectScore}`
+  // incorrectScoreElement.textContent = `${incorrectScore}`
   startOfGame.style.display = "none";
   endOfGame.style.display = "none";
   quizWrapper.style.display = "flex";
@@ -67,7 +67,7 @@ function playQuiz() {
 
   let currentTopic = topics[Math.floor(Math.random() * topics.length)]
   if (incorrectScore === 3) {
-    endGame()
+    endGame('gameOver')
   } else {
   [city1, city2] = getCities(currentTopic)
 
@@ -171,10 +171,20 @@ function checkAnswer(cityX, cityY) {
     totalIncorrect++
   }
   scoreElement.textContent = `${score}`
-  incorrectScoreElement.textContent = `${incorrectScore}`
+  // incorrectScoreElement.textContent = `${incorrectScore}`
+  incorrectIndicator()
   playQuiz()
 }
 
+function incorrectIndicator(){
+  if (incorrectScore === 1){
+    quizWrapper.classList.add("red1")
+  } else if  (incorrectScore === 2){
+    quizWrapper.classList.add("red2")
+  } else  {
+    quizWrapper.classList.remove("red1", "red2")
+  }
+  }
 
 
 
@@ -244,16 +254,17 @@ function checkAnswer(cityX, cityY) {
  * A function score/totalIncorrect needs to be made to determine rating
  */
  
-  function endGame(condition = 'gameOver') {
+  function endGame(condition) {
     gameEnded = true;
     quizWrapper.style.display = "none"
     endOfGame.style.display = "flex"
 
     const endGameBtn = document.createElement('button')
-    endGameBtn.textContent = 'start again'
+    
+
+    endGameBtn.textContent = 'Go Again'
     endGameBtn.addEventListener('click', () => startGame())
 
-    // need to create all elements rather than innerhtml
     // condition isnt working as intended 
     endOfGame.innerHTML = `
  
@@ -266,6 +277,7 @@ function checkAnswer(cityX, cityY) {
 `
 
     endOfGame.appendChild(endGameBtn)
+   
   }
 
   function getRating(right, wrong) {
@@ -284,6 +296,7 @@ function checkAnswer(cityX, cityY) {
       }
     } 
   
+
 
  
   
