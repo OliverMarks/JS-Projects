@@ -40,7 +40,7 @@ function startGame() {
   score = 0;
   incorrectScore = 0;
   totalIncorrect = 0;
-  daftAudio.play()
+  
   messageElement.textContent = 
   messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
@@ -52,8 +52,7 @@ function startGame() {
   startTimer();
   playQuiz();
 }
-
-
+daftAudio.play()
 
 /**
  * Renders the quiz by selecting two cities to compare and displaying
