@@ -198,13 +198,18 @@ button {
    
 }
 
-#timer {
-    text-justify: center;
-   text-align: center;
-    background-color: white;
+
+
+#time-bar {
+    width: 100%;
+    height: 30px;
     border-radius: 12px;
-    padding: 2px;
-}
+    margin: 5px;
+    background-color: green;
+    transition: width 1s linear;
+  }
+
+ 
 
 
 .endOfGame {
