@@ -10,7 +10,7 @@ const button2 = document.querySelector("#answer-btn-2")
 const questionElement = document.querySelector("#question")
 const scoreElement = document.querySelector("#score")
 const timeBar = document.getElementById('time-bar');
-const messageElement = document.querySelector("#message")
+// const messageElement = document.querySelector("#message")
 const endOfGame = document.getElementById("endOfGame")
 const timer = document.getElementById("timer")
 let gameEnded = false;
@@ -27,9 +27,9 @@ let totalIncorrect = 0 // total number of incorrect answers
 let city1 // first city to compare in the quiz
 let city2 // second city to compare in the quiz
 
-// Arrays to store possible messages to display
-const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7 - incredible", "Good Gravy!", "Check out the Geog-chops on this fella", "Unbelievable Jeff"]
-const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?", "Just shite", "Utterly Ridiculous", "Wasting everyone's time" ]
+// // Arrays to store possible messages to display
+// const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7 - incredible", "Good Gravy!", "Check out the Geog-chops on this fella", "Unbelievable Jeff"]
+// const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?", "Just shite", "Utterly Ridiculous", "Wasting everyone's time" ]
 
 
 
@@ -58,15 +58,15 @@ function startGame() {
   score = 0;
   incorrectScore = 0;
   totalIncorrect = 0;
-  messageElement.textContent = 
-  messageElement.classList.remove("incorrect", "correct") 
+  // messageElement.textContent = 
+  // messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
   
   startOfGame.style.display = "none";
   endOfGame.style.display = "none";
   quizWrapper.style.display = "flex";
   container.style.display = "flex";
-  timeBar.style.backgroundColor = 'green';
+  timeBar.style.backgroundColor = '#55F991';
   timeBar.style.width = '100%';
   startTimer();
   playQuiz();
@@ -203,18 +203,18 @@ function checkAnswer(cityX, cityY) {
    if (cityX.answer > cityY.answer) {
     console.log('Correct!')
     console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
-    getMessage(happy)
-    messageElement.classList.remove("incorrect") 
-    messageElement.classList.add("correct")
+    // getMessage(happy)
+    // messageElement.classList.remove("incorrect") 
+    // messageElement.classList.add("correct")
     score++
     incorrectScore = 0
   } else {
     console.log('Incorrect')
     console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
     //set wrong answer
-    getMessage(sad)
-    messageElement.classList.remove("correct") 
-    messageElement.classList.add("incorrect")
+    // getMessage(sad)
+    // messageElement.classList.remove("correct") 
+    // messageElement.classList.add("incorrect")
     incorrectScore++
     totalIncorrect++
   }
@@ -226,11 +226,11 @@ function checkAnswer(cityX, cityY) {
 
  // Displays a random message from the given message array.
 
-function getMessage(messageArray) {
-  const randomIndex = Math.floor(Math.random() * messageArray.length)
-    messageElement.textContent = messageArray[randomIndex]
-    messageElement.style.display ="flex"
-  }
+// function getMessage(messageArray) {
+//   const randomIndex = Math.floor(Math.random() * messageArray.length)
+//     messageElement.textContent = messageArray[randomIndex]
+//     messageElement.style.display ="flex"
+//   }
   
 
 

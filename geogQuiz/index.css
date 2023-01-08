@@ -168,7 +168,7 @@ button {
 
 .correct {
     border-style: solid; 
-    border-color: rgb(47, 255, 0);
+    border-color: #55F991;
     border-width: 8px;
 
 }
@@ -205,7 +205,7 @@ button {
     height: 30px;
     border-radius: 12px;
     margin: 5px;
-    background-color: green;
+    background-color:#55F991;
     transition: width 1s linear;
   }
 
