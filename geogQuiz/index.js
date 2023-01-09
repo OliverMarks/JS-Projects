@@ -4,12 +4,13 @@ const daftAudio = document.getElementById("8bit-daft")
 const quizWrapper = document.getElementById("quiz-wrapper")
 const startBtn = document.getElementById("start-btn")
 const container = document.getElementById("container")
-const muteButton = document.getElementById('mute-button');
+const muteButton = document.getElementById('mute-button')
 const button1 = document.querySelector("#answer-btn-1")
 const button2 = document.querySelector("#answer-btn-2")
 const questionElement = document.querySelector("#question")
 const scoreElement = document.querySelector("#score")
-const timeBar = document.getElementById('time-bar');
+const timeBar = document.getElementById('time-bar')
+const betweenRounds = document.getElementById('between-rounds')
 // const messageElement = document.querySelector("#message")
 const endOfGame = document.getElementById("endOfGame")
 const timer = document.getElementById("timer")
@@ -21,7 +22,9 @@ const topics = ['population', 'longitude', 'latitude'] //'currency', 'country']
 // , 'currency', 'country'
 
 let citiesAll // will store the data from the city.json file
+let questionSet
 let score = 0 // player's current score
+let roundNumber = 1 
 let incorrectScore = 0 // number of consecutive incorrect answers
 let totalIncorrect = 0 // total number of incorrect answers
 let city1 // first city to compare in the quiz
@@ -54,22 +57,24 @@ getData();
  * Calls the `startTimer` and `playQuiz` functions.
  */
 function startGame() {
-  gameEnded = false;
-  score = 0;
-  incorrectScore = 0;
-  totalIncorrect = 0;
+  gameEnded = false
+  score = 0
+  incorrectScore = 0
+  totalIncorrect = 0
+  roundNumber = 1 
   // messageElement.textContent = 
   // messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
   
-  startOfGame.style.display = "none";
-  endOfGame.style.display = "none";
-  quizWrapper.style.display = "flex";
-  container.style.display = "flex";
-  timeBar.style.backgroundColor = '#55F991';
-  timeBar.style.width = '100%';
-  startTimer();
-  playQuiz();
+  startOfGame.style.display = "none"
+  endOfGame.style.display = "none"
+  quizWrapper.style.display = "flex"
+  container.style.display = "flex"
+  timeBar.style.backgroundColor = '#55F991'
+  timeBar.style.width = '100%'
+  startOfRound()
+  startTimer()
+  playQuiz()
 }
 
 
@@ -83,7 +88,7 @@ function playQuiz() {
     'population': 'Which city has a larger population:',
     'longitude': 'Which city is furthest East: ',
     'latitude': 'Which city is furthest North: '
-    // 'currency': `The is the currency used in which city:`,
+    // 'currency': `The  is the currency used in which city:`,
     // 'country': `'Which of these cities is in:`
   }
 
@@ -158,17 +163,44 @@ function startTimer() {
     timeLeft--
     timeBar.style.width = `${timeLeft / 60 * 100}%`
     if (timeLeft <= 10) {
-      timeBar.style.backgroundColor = 'red'
+      timeBar.style.backgroundColor = '#DC3B08'
     }
-    if (timeLeft === 0 || gameEnded) {
+    if (timeLeft === 0) {
+      roundNumber++
+      startOfRound()
+      clearInterval(interval)
+      console.log(roundNumber)
+      return 
+    } else if (timeLeft === 0 && roundNumber === 4) {
       clearInterval(interval)
       endGame('time')
-      return 
     }
   }, 1000) }
 
-
-
+  function startOfRound() {
+    if (roundNumber === 2) {
+      quizWrapper.style.display = "none"
+      betweenRounds.style.display = "block"
+      betweenRounds.innerHTML = `<div class="question">Ready to take it up a notch? </div>`
+    }
+    else if (roundNumber === 3) {
+      quizWrapper.style.display = "none"
+      betweenRounds.style.display = "block"
+      betweenRounds.innerHTML = `<div class="question">One More to go; time for hard mode </div>`
+    }
+    else {
+      betweenRounds.style.display = "none"
+    }
+    setTimeout(function() {
+      betweenRounds.style.display = "none"
+      quizWrapper.style.display = "flex"
+      container.style.display = "flex"
+      timeBar.style.backgroundColor = '#55F991'
+      startTimer()      
+      playQuiz()
+    }, 4500)
+  }
+  
 
 
 // Event listeners for button clicks
@@ -252,7 +284,9 @@ function incorrectIndicator(){
  */
 
   function getCities(topic) {
-    const cityKeys = Object.keys(citiesAll)
+    let questionSet = decideQuestionSet()
+
+    const cityKeys = Object.keys(questionSet)
     const randomIndex1 = Math.floor(Math.random() * cityKeys.length)
     const randomIndex2 = Math.floor(Math.random() * cityKeys.length)
     const city1Key = cityKeys[randomIndex1]
@@ -261,12 +295,12 @@ function incorrectIndicator(){
     // if (topic === 'population' || 'longitude' || 'latitude') {
 
   const city1 = {
-      name: getNestedValue(citiesAll, city1Key, "name"),
-      answer: getNestedValue(citiesAll, city1Key, topic)
+      name: getNestedValue(questionSet, city1Key, "name"),
+      answer: getNestedValue(questionSet, city1Key, topic)
   }
   const city2 = {
-    name: getNestedValue(citiesAll, city2Key, "name"),
-    answer: getNestedValue(citiesAll, city2Key, topic)
+    name: getNestedValue(questionSet, city2Key, "name"),
+    answer: getNestedValue(questionSet, city2Key, topic)
   }
 // } else {
 //   const city1 = {
@@ -282,7 +316,18 @@ console.log([city1, city2])
 return [city1, city2]
 }
 
- 
+
+//will change to correct data sets when we have them
+ function decideQuestionSet() {
+  if (roundNumber === 1) {
+    questionSet = citiesAll 
+  } else if (roundNumber === 2) {
+     questionSet = citiesAll
+  } else {
+    questionSet = citiesAll 
+  }
+  return questionSet
+ } 
   
 
 

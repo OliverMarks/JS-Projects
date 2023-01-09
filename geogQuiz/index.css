@@ -115,6 +115,7 @@ h1 {
     align-items: center;
     background-color: white;
     min-height: 125px;
+    height: 150px;
     width: fit-content;
     font-size: 30px;
     padding: 0.65em; 
