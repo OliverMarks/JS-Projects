@@ -24,8 +24,9 @@ const topics = ['population', 'longitude', 'latitude'] //'currency', 'country']
 let citiesAll // will store the data from the city.json file
 let timeLeft
 let questionSet
+let interval
 let score = 0 // player's current score
-let roundNumber = 1 
+let roundNumber = 0 
 let incorrectScore = 0 // number of consecutive incorrect answers
 let totalIncorrect = 0 // total number of incorrect answers
 let city1 // first city to compare in the quiz
@@ -62,7 +63,7 @@ function startGame() {
   score = 0
   incorrectScore = 0
   totalIncorrect = 0
-  roundNumber = 0
+  roundNumber = 1
   // messageElement.textContent = 
   // messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
@@ -74,8 +75,7 @@ function startGame() {
   timeBar.style.backgroundColor = '#55F991'
   timeBar.style.width = '100%'
   startOfRound()
-  startTimer()
-  playQuiz()
+  
 }
 
 
@@ -95,7 +95,7 @@ function playQuiz() {
 
   let currentTopic = topics[Math.floor(Math.random() * topics.length)]
   console.log(currentTopic)
-  if (incorrectScore === 3) {
+  if (incorrectScore >= 3) {
     endGame('gameOver')
   } else {
   [city1, city2] = getCities(currentTopic)
@@ -114,6 +114,7 @@ function playQuiz() {
  
  function endGame(condition) {
   gameEnded = true;
+  clearInterval(interval)
   quizWrapper.style.display = "none"
   endOfGame.style.display = "flex"
 
@@ -159,9 +160,10 @@ function getRating(right, wrong) {
 
 // Timer function
 function startTimer() {
-  let timeLeft = 60
+  let timeLeft = 20
   timeBar.style.backgroundColor = '#55F991'
-  const interval = setInterval(() => {
+  clearInterval(interval)
+  interval = setInterval(() => {
     timeLeft--
     timeBar.style.width = `${timeLeft / 60 * 100}%`
     if (timeLeft <= 10) {
@@ -169,26 +171,32 @@ function startTimer() {
     }
     if (timeLeft === 0) {
       clearInterval(interval)
+      if (roundNumber === 3) {
+        quizWrapper.style.display = "none"
+      
+      endGame('time')
+      return
+      }
       roundNumber++
       startOfRound()
       console.log(roundNumber)
       return 
-    } else if (roundNumber === 6) {
-      quizWrapper.style.display = "none"
-      clearInterval(interval)
-      endGame('time')
-    }
+    }  
+      
+    
    
   }, 1000) }
 
   function startOfRound() {
-    let timeLeft = 60
+    timeLeft = 20
+    interval = 
+    quizWrapper.classList.remove("red1", "red2")
     if (roundNumber === 2) {
       quizWrapper.style.display = "none"
       betweenRounds.style.display = "block"
       betweenRounds.innerHTML = `<div class="question">Ready to take it up a notch? </div>`
     }
-    else if (roundNumber === 4) {
+    else if (roundNumber === 3) {
       quizWrapper.style.display = "none"
       betweenRounds.style.display = "block"
       betweenRounds.innerHTML = `<div class="question">One More to go; time for hard mode </div>`
