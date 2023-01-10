@@ -22,6 +22,7 @@ const topics = ['population', 'longitude', 'latitude'] //'currency', 'country']
 // , 'currency', 'country'
 
 let citiesAll // will store the data from the city.json file
+let timeLeft
 let questionSet
 let score = 0 // player's current score
 let roundNumber = 1 
@@ -61,7 +62,7 @@ function startGame() {
   score = 0
   incorrectScore = 0
   totalIncorrect = 0
-  roundNumber = 1 
+  roundNumber = 0
   // messageElement.textContent = 
   // messageElement.classList.remove("incorrect", "correct") 
   scoreElement.textContent = `${score}`
@@ -119,7 +120,7 @@ function playQuiz() {
   const endGameBtn = document.createElement('button')
   
 
-  endGameBtn.textContent = 'Go Again'
+  endGameBtn.textContent = 'Go Again?'
   endGameBtn.addEventListener('click', () => startGame())
 
   // condition isnt working as intended 
@@ -159,6 +160,7 @@ function getRating(right, wrong) {
 // Timer function
 function startTimer() {
   let timeLeft = 60
+  timeBar.style.backgroundColor = '#55F991'
   const interval = setInterval(() => {
     timeLeft--
     timeBar.style.width = `${timeLeft / 60 * 100}%`
@@ -166,24 +168,27 @@ function startTimer() {
       timeBar.style.backgroundColor = '#DC3B08'
     }
     if (timeLeft === 0) {
+      clearInterval(interval)
       roundNumber++
       startOfRound()
-      clearInterval(interval)
       console.log(roundNumber)
       return 
-    } else if (timeLeft === 0 && roundNumber === 4) {
+    } else if (roundNumber === 6) {
+      quizWrapper.style.display = "none"
       clearInterval(interval)
       endGame('time')
     }
+   
   }, 1000) }
 
   function startOfRound() {
+    let timeLeft = 60
     if (roundNumber === 2) {
       quizWrapper.style.display = "none"
       betweenRounds.style.display = "block"
       betweenRounds.innerHTML = `<div class="question">Ready to take it up a notch? </div>`
     }
-    else if (roundNumber === 3) {
+    else if (roundNumber === 4) {
       quizWrapper.style.display = "none"
       betweenRounds.style.display = "block"
       betweenRounds.innerHTML = `<div class="question">One More to go; time for hard mode </div>`
@@ -195,10 +200,10 @@ function startTimer() {
       betweenRounds.style.display = "none"
       quizWrapper.style.display = "flex"
       container.style.display = "flex"
-      timeBar.style.backgroundColor = '#55F991'
-      startTimer()      
-      playQuiz()
+      
     }, 4500)
+    startTimer()      
+      playQuiz()
   }
   
 
