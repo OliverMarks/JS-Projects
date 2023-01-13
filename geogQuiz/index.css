@@ -142,8 +142,24 @@ button {
     padding: 0; 
     border-radius: 12px;
     font-weight: 800;
+}
     
-    
+
+    .answer-btn {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        
+        height:50px; 
+        width:300px;
+        border-style: solid;
+        background-color: white;
+        margin: 3px; 
+        cursor: pointer;
+        font-size: 20px;
+        padding: 0; 
+        border-radius: 12px;
+        font-weight: 800;
 
     
 }

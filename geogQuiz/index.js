@@ -7,67 +7,59 @@ const container = document.getElementById("container")
 const muteButton = document.getElementById('mute-button')
 const button1 = document.querySelector("#answer-btn-1")
 const button2 = document.querySelector("#answer-btn-2")
+const button3 = document.querySelector("#answer-btn-3") 
+const button4 = document.querySelector("#answer-btn-4")
 const questionElement = document.querySelector("#question")
-const scoreElement = document.querySelector("#score")
+const scoreElement = document.querySelector("#scores")
 const timeBar = document.getElementById('time-bar')
 const betweenRounds = document.getElementById('between-rounds')
-// const messageElement = document.querySelector("#message")
 const endOfGame = document.getElementById("endOfGame")
 const timer = document.getElementById("timer")
 let gameEnded = false;
 
 
-const topics = ['population', 'longitude', 'latitude'] //'currency', 'country']
+const topics = ['population', 'longitude', 'latitude'] 
+const buttons = [button1, button2, button3, button4]
 
-// , 'currency', 'country'
-
-let citiesAll // will store the data from the city.json file
+let eventHandler 
+let citiesAll 
+let cities = []
+let displayedCities = []
 let timeLeft
 let questionSet
 let interval
-let score = 0 // player's current score
-let roundNumber = 0 
+let scores = Array(3).fill(0) 
+let roundNumber = 0
 let incorrectScore = 0 // number of consecutive incorrect answers
 let totalIncorrect = 0 // total number of incorrect answers
-let city1 // first city to compare in the quiz
-let city2 // second city to compare in the quiz
-
-// // Arrays to store possible messages to display
-// const happy = ["Nice!", "Oh that's what I call Geography", "WOwowowowOWOW", "5/7 - incredible", "Good Gravy!", "Check out the Geog-chops on this fella", "Unbelievable Jeff"]
-// const sad = ["Christ, really?", "Don't be silly", "Lol wut", "Did you go to school in the north?", "Just shite", "Utterly Ridiculous", "Wasting everyone's time" ]
 
 
-
-
-/**
- * Fetches data from city.json and stores it in the `cities` variable.
- * Then calls the `playQuiz` function to start the quiz.
- */
 const getData = async () => {
-  const response = await fetch('citiesAll.json');
-  citiesAll =  await response.json();
-  playQuiz();
-  
+  const response = await fetch('citiesAll.json')
+  citiesAll =  await response.json()
 };
 
-// Fetches data from city.json and starts the quiz
-getData();
+class EventHandler {
+  constructor(e) {
+      this.boundEventHandler = this.eventHandler.bind(this, e);
+  }
+  eventHandler(arg) {
+      checkAnswer(arg, displayedCities)
+    }
+  // removeListener() {
+  //     buttons[i].removeEventListener('click', this.boundEventHandler);
+  // }
+}
 
-/**
- * Hides the start screen and starts the quiz.
- * Resets the score and number of incorrect answers.
- * Calls the `startTimer` and `playQuiz` functions.
- */
+
+// Fetches data from city.json and starts the quiz
 function startGame() {
   gameEnded = false
-  score = 0
+  scores = Array(3).fill(0)
   incorrectScore = 0
   totalIncorrect = 0
   roundNumber = 1
-  // messageElement.textContent = 
-  // messageElement.classList.remove("incorrect", "correct") 
-  scoreElement.textContent = `${score}`
-  
+  scoreElement.textContent = `${scores[roundNumber-1]}`
   startOfGame.style.display = "none"
   endOfGame.style.display = "none"
   quizWrapper.style.display = "flex"
@@ -78,85 +70,67 @@ function startGame() {
   
 }
 
+getData()
 
-/**
- * Renders the quiz by selecting two cities to compare and displaying
- * their names as the quiz question.
- * If the player has answered three questions incorrectly in a row, ends the game.
- */
-function playQuiz() {
+function generateQuestion() {
   const questionDict = {
     'population': 'Which city has a larger population:',
     'longitude': 'Which city is furthest East: ',
     'latitude': 'Which city is furthest North: '
-    // 'currency': `The  is the currency used in which city:`,
-    // 'country': `'Which of these cities is in:`
   }
 
   let currentTopic = topics[Math.floor(Math.random() * topics.length)]
   console.log(currentTopic)
+
   if (incorrectScore >= 3) {
     endGame('gameOver')
   } else {
-  [city1, city2] = getCities(currentTopic)
+    let cities = getCities(currentTopic)
+    
+    displayedCities = cities.slice(0,roundNumber+1)
+    console.log(displayedCities)
+    let questionString = `${questionDict[currentTopic]} ${displayedCities.map(function(city){return city.name}).join(" or ")}`
+    
+    for (let i = 0; i < roundNumber + 1; i++) {
+      
+      eventHandler = new EventHandler(displayedCities[i]);
+      buttons[i].addEventListener('click', eventHandler.boundEventHandler);
+      
+ 
+      // buttons[i].addEventListener("click", () => {
+      //     checkAnswer(displayedCities[i], displayedCities)
+      //     });
 
-  questionElement.textContent = `${questionDict[currentTopic]} ${city1.name} or ${city2.name}?`
-  button1.textContent = city1.name
-  button2.textContent = city2.name
-}}
+      buttons[i].style.display = "block"
+      buttons[i].textContent = displayedCities[i].name
+    }
+    questionString += "?"
+    questionElement.textContent = questionString
+  }
+}
 
-
-
- /**
- * Hides the quiz and displays the end game screen.
- * The final score and number of incorrect answers are displayed.
- */
  
  function endGame(condition) {
-  gameEnded = true;
+  gameEnded = true
   clearInterval(interval)
   quizWrapper.style.display = "none"
   endOfGame.style.display = "flex"
-
   const endGameBtn = document.createElement('button')
-  
-
   endGameBtn.textContent = 'Go Again?'
   endGameBtn.addEventListener('click', () => startGame())
-
-  // condition isnt working as intended 
   endOfGame.innerHTML = `
-
-<h1>${condition === 'time' ? 'Time up' : 'Game Over'}</h1>
-<p>Final Score: ${score}</p>
-
-<p>Total Wrong: ${totalIncorrect}</p>
-
-<p>Rating: ${getRating(score, totalIncorrect)}</p>
-`
+  <h1>${condition === 'time' ? 'Congrats' : 'Game Over'}</h1>
+  <p>Round One Score: ${scores[0]}</p>
+  <p>Round Two Score: ${scores[1]}</p>
+  <p>Round Three Score: ${scores[2]}</p>
+  <p>Final Score: ${scores.reduce((a, b) => a + b, 0)}</p>
+  <p>Total Wrong: ${totalIncorrect}</p>`
 
   endOfGame.appendChild(endGameBtn)
  
 }
 
-function getRating(right, wrong) {
-  const correctRatio = right/wrong 
-  console.log(correctRatio)
-  if (correctRatio < 1) {
-  return "Shocking"
-  } else if (correctRatio < 2){
-    return "Not great ay"
-  } else if (correctRatio < 3){
-    return "Not bad" 
-  } else if (correctRatio < 4){
-    return "Impressive" 
-    } else if(correctRatio < 5) {
-      return "Superstar DJ"
-    } else if (correctRatio < 6 && totalIncorrect === 0) {
-      return "PERFECTION"
-    }
-  
-  } 
+
 
 // Timer function
 function startTimer() {
@@ -183,26 +157,33 @@ function startTimer() {
       return 
     }  
       
-    
-   
   }, 1000) }
 
   function startOfRound() {
+    incorrectScore = 0
     timeLeft = 20
     interval = 
     quizWrapper.classList.remove("red1", "red2")
+    
     if (roundNumber === 2) {
       quizWrapper.style.display = "none"
       betweenRounds.style.display = "block"
-      betweenRounds.innerHTML = `<div class="question">Ready to take it up a notch? </div>`
-    }
-    else if (roundNumber === 3) {
+      betweenRounds.innerHTML = `<div class="question">${scores[0]} Correct, Not bad! Ready to take it up a notch?
+      More cities and three answers to choose from! </div>`
+    
+    } else if (roundNumber === 3) {
       quizWrapper.style.display = "none"
       betweenRounds.style.display = "block"
-      betweenRounds.innerHTML = `<div class="question">One More to go; time for hard mode </div>`
-    }
-    else {
+      betweenRounds.innerHTML = 
+      `<div class="question">${scores[1]} Correct Good stuff, One More to go; time for hard mode. 
+      All cities and four answers!</div>`
+    
+    } else if (roundNumber >= 3){
       betweenRounds.style.display = "none"
+    
+    } else {
+      betweenRounds.style.display = "none"
+    
     }
     setTimeout(function() {
       betweenRounds.style.display = "none"
@@ -210,26 +191,57 @@ function startTimer() {
       container.style.display = "flex"
       
     }, 4500)
+    
     startTimer()      
-      playQuiz()
+    generateQuestion()
+     
   }
   
 
 
-// Event listeners for button clicks
-button1.addEventListener("click", function() {
-  checkAnswer(city1, city2)
-})
 
-button2.addEventListener("click", function() {
-  checkAnswer(city2, city1)
-})
 
 startBtn.addEventListener("click", function(){
   startGame()
-  daftAudio.play()
+  // daftAudio.play()
 })
 
+
+
+function checkAnswer(cityX, displayedCities) {
+  let isCorrect = true
+  let maxAnswer = cityX.answer
+  for (let i = 0; i < displayedCities.length; i++) {
+    if (cityX.name !== displayedCities[i].name && cityX.answer < displayedCities[i].answer) {
+      isCorrect = false
+      break
+    }
+    maxAnswer = Math.max(maxAnswer, displayedCities[i].answer)
+  }
+  if (isCorrect && cityX.answer === maxAnswer) {
+    console.log("Correct!", maxAnswer)
+    scores[roundNumber - 1]++
+    incorrectScore = 0
+  } else {
+    console.log("Incorrect", incorrectScore, maxAnswer)
+    incorrectScore++
+    totalIncorrect++
+  }
+  scoreElement.textContent = `${scores[roundNumber - 1]}`
+  incorrectIndicator()
+  eventHandler.removeListener()
+
+  // for (let i = 0; i < roundNumber + 1; i++) {
+  //   buttons[i].removeEventListener("click", () => {
+  //   checkAnswer(displayedCities[i], displayedCities)})
+  //   }
+  generateQuestion()
+}
+
+
+
+
+  
 muteButton.addEventListener('click', () => {
   const audioElement = document.querySelector('audio')
   audioElement.muted = !audioElement.muted
@@ -241,44 +253,6 @@ muteButton.addEventListener('click', () => {
   }
 })
 
-function checkAnswer(cityX, cityY) {
-  // if (currentTopic === 'currency' || 'country') {
-  //   if ()
-  // }
-   if (cityX.answer > cityY.answer) {
-    console.log('Correct!')
-    console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
-    // getMessage(happy)
-    // messageElement.classList.remove("incorrect") 
-    // messageElement.classList.add("correct")
-    score++
-    incorrectScore = 0
-  } else {
-    console.log('Incorrect')
-    console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
-    //set wrong answer
-    // getMessage(sad)
-    // messageElement.classList.remove("correct") 
-    // messageElement.classList.add("incorrect")
-    incorrectScore++
-    totalIncorrect++
-  }
-  scoreElement.textContent = `${score}`
-  // incorrectScoreElement.textContent = `${incorrectScore}`
-  incorrectIndicator()
-  playQuiz()
-}
-
- // Displays a random message from the given message array.
-
-// function getMessage(messageArray) {
-//   const randomIndex = Math.floor(Math.random() * messageArray.length)
-//     messageElement.textContent = messageArray[randomIndex]
-//     messageElement.style.display ="flex"
-//   }
-  
-
-
 function incorrectIndicator(){
   if (incorrectScore === 1){
     quizWrapper.classList.add("red1")
@@ -289,45 +263,32 @@ function incorrectIndicator(){
   }
   }
 
+function getCities(topic) {
+  let questionSet = decideQuestionSet()
+  const cityKeys = Object.keys(questionSet)
 
-/**
- * Gets two cities for the quiz by randomly selecting keys from the `cities` object.
- * The cities' names and population data are extracted using the `getNestedValue` function.
- * @returns {array} An array of two city arrays, each containing a city's name and population.
- */
-
-  function getCities(topic) {
-    let questionSet = decideQuestionSet()
-
-    const cityKeys = Object.keys(questionSet)
-    const randomIndex1 = Math.floor(Math.random() * cityKeys.length)
-    const randomIndex2 = Math.floor(Math.random() * cityKeys.length)
-    const city1Key = cityKeys[randomIndex1]
-    const city2Key = cityKeys[randomIndex2]
-
-    // if (topic === 'population' || 'longitude' || 'latitude') {
-
-  const city1 = {
-      name: getNestedValue(questionSet, city1Key, "name"),
-      answer: getNestedValue(questionSet, city1Key, topic)
+  let numCities
+  if (roundNumber === 1) {
+    numCities = 2
+  } else if (roundNumber === 2) {
+    numCities = 3
+  } else if (roundNumber === 3) {
+    numCities = 4
   }
-  const city2 = {
-    name: getNestedValue(questionSet, city2Key, "name"),
-    answer: getNestedValue(questionSet, city2Key, topic)
+  let cities = []
+  for (let i = 0; i < numCities; i++) {
+      const randomIndex = Math.floor(Math.random() * cityKeys.length)
+      const cityKey = cityKeys[randomIndex]
+      const city = {
+          name: getNestedValue(questionSet, cityKey, "name"),
+          answer: getNestedValue(questionSet, cityKey, topic)
+      }
+      cities.push(city)
   }
-// } else {
-//   const city1 = {
-//     name: getNestedValue(citiesAll, city1Key, "name"),
-//     answer: getNestedValue(citiesAll, city1Key, topic)
-// }
-// const city2 = {
-//   name: getNestedValue(citiesAll, city2Key, "name"),
-//   answer: getNestedValue(citiesAll, city2Key, topic)
-// }
-
-console.log([city1, city2])
-return [city1, city2]
+  console.log(cities)
+  return cities
 }
+
 
 
 //will change to correct data sets when we have them
@@ -343,42 +304,114 @@ return [city1, city2]
  } 
   
 
-
-  /**
- * Returns the value of a nested object key.
- * @param {object} obj - The object to search.
- * @param {string} key - The key to search for in the object.
- * @param {string} nestedKey - The nested key to search for in the object.
- * @returns {any} The value of the nested key, or null if not found.
- */
-
-  // function getNestedValue(obj, key, nestedKey, nestedNestedKey) {
-  //   if (nestedKey && nestedNestedKey) {
-  //     if (obj[key] && obj[key][nestedKey] && obj[key][nestedKey][nestedNestedKey]) {
-  //       return obj[key][nestedKey][nestedNestedKey];
-  //     }
-  //   } else if (nestedKey) {
-  //     if (obj[key] && obj[key][nestedKey]) {
-  //       return obj[key][nestedKey];
-  //     }
-  //   } else {
-  //     if (obj[key]) {
-  //       return obj[key];
-  //     }
-  //   }
-  //   return null;
-  // }
-
   function getNestedValue(obj, key, nestedKey) {
     if (obj[key] && obj[key][nestedKey]) {
-      return obj[key][nestedKey];
+      return obj[key][nestedKey]
     }
-    return null;
+    return null
   }
 
-  
 
 
+//   function getCities(topic) {
+//     let questionSet = decideQuestionSet()
+
+//     const cityKeys = Object.keys(questionSet)
+//     const randomIndex1 = Math.floor(Math.random() * cityKeys.length)
+//     const randomIndex2 = Math.floor(Math.random() * cityKeys.length)
+//     const city1Key = cityKeys[randomIndex1]
+//     const city2Key = cityKeys[randomIndex2]
+
+
+//   const city1 = {
+//       name: getNestedValue(questionSet, city1Key, "name"),
+//       answer: getNestedValue(questionSet, city1Key, topic)
+//   }
+//   const city2 = {
+//     name: getNestedValue(questionSet, city2Key, "name"),
+//     answer: getNestedValue(questionSet, city2Key, topic)
+//   }
+
+// console.log([city1, city2])
+// return [city1, city2]
+// }
+
+
+
+
+// function getRating(right, wrong) {
+//   const correctRatio = right/wrong 
+//   console.log(correctRatio)
+//   if (correctRatio < 1) {
+//   return "Shocking"
+//   } else if (correctRatio < 2){
+//     return "Not great ay"
+//   } else if (correctRatio < 3){
+//     return "Not bad" 
+//   } else if (correctRatio < 4){
+//     return "Impressive" 
+//     } else if(correctRatio < 5) {
+//       return "Superstar DJ"
+//     } else if (correctRatio < 6 && totalIncorrect === 0) {
+//       return "PERFECTION"
+//     }
   
+//   } 
+
+
+
+// function checkAnswer(cityX, cityY) {
  
-  
+//    if (cityX.answer > cityY.answer) {
+//     console.log('Correct!')
+//     console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
+//     scores[roundNumber - 1]++
+//     incorrectScore = 0
+//   } else {
+//     console.log('Incorrect')
+//     console.log(cityX.name, cityX.answer, cityY.name, cityY.answer)
+//     incorrectScore++
+//     totalIncorrect++
+//   }
+//   scoreElement.textContent = `${scores[roundNumber]}`
+//   incorrectIndicator()
+//   generateQuestion()
+// }
+
+// // Event listeners for button clicks
+// button1.addEventListener("click", function() {
+//   checkAnswer(city1, city2)
+// })
+
+// button2.addEventListener("click", function() {
+//   checkAnswer(city2, city1)
+// })
+
+//     let cities = getCities(currentTopic);
+//     const buttons = [button1, button2, button3, button4];
+//     for (let i = 0; i < roundNumber + 1; i++) {
+//       buttons[i].style.display = "block";
+//       buttons[i].textContent = cities[i].name;
+//     }
+//     questionElement.textContent = `${questionDict[currentTopic]} ${cities[0].name} or ${cities[1].name}?`;
+//   }
+// }
+
+
+
+//   if (incorrectScore >= 3) {
+//     endGame('gameOver')
+//   } else {
+//   [city1, city2] = getCities(currentTopic)
+
+//   questionElement.textContent = `${questionDict[currentTopic]} ${city1.name} or ${city2.name}?`
+//   button1.textContent = city1.name
+//   button2.textContent = city2.name
+// }}
+
+
+
+ /**
+ * Hides the quiz and displays the end game screen.
+ * The final score and number of incorrect answers are displayed.
+ */
