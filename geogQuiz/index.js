@@ -119,7 +119,7 @@ function generateQuestion() {
 
 // Timer function
 function startTimer() {
-  let timeLeft = 20
+  let timeLeft = 60
   timeBar.style.backgroundColor = '#55F991'
   clearInterval(interval)
   interval = setInterval(() => {
@@ -151,7 +151,7 @@ while (answerBtns.length > 0) {
   btnBox.removeChild(answerBtns[0])
 }
     incorrectScore = 0
-    timeLeft = 20
+    timeLeft = 60
     interval = 
     quizWrapper.classList.remove("red1", "red2")
     
