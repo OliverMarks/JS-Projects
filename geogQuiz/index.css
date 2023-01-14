@@ -115,7 +115,7 @@ h1 {
     align-items: center;
     background-color: white;
     min-height: 125px;
-    height: 150px;
+    height: 200px;
     width: fit-content;
     font-size: 30px;
     padding: 0.65em; 
@@ -125,6 +125,21 @@ h1 {
  
 }
 
+.between-round {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    min-height: 125px;
+    height: 350px;
+    width: fit-content;
+    font-size: 30px;
+    padding: 0.65em; 
+    margin-bottom: 0.7em;
+    margin-top: 0.1em;
+    border-radius: 12px;
+ 
+}
 
 
 button {
@@ -234,6 +249,7 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    line-height: 0.5; 
     padding: 20px;
     width: fit-content;
     max-width: 400px;
@@ -244,3 +260,5 @@ button {
     border-radius: 12px;
     background-color: rgb(254, 251, 251, 0.8)
 }
+
+
