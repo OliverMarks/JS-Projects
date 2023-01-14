@@ -229,12 +229,7 @@ function checkAnswer(cityX, displayedCities) {
 while (answerBtns.length > 0) {
   btnBox.removeChild(answerBtns[0])
 }
-  // buttons.forEach((btn) => btn.removeEventListener('click', handleClick(e)))
-  
-  // for (let i = 0; i < roundNumber + 1; i++) {
-  //   buttons[i].removeEventListener("click", () => {
-  //   checkAnswer(displayedCities[i], displayedCities)})
-  //   }
+
   generateQuestion()
 }
 
@@ -242,16 +237,16 @@ while (answerBtns.length > 0) {
 
 
   
-muteButton.addEventListener('click', () => {
-  const audioElement = document.querySelector('audio')
-  audioElement.muted = !audioElement.muted
+// muteButton.addEventListener('click', () => {
+//   const audioElement = document.querySelector('audio')
+//   audioElement.muted = !audioElement.muted
 
-  if (audioElement.muted) {
-    muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>'
-  } else {
-    muteButton.innerHTML = '<i class="fas fa-volume-up"></i>'
-  }
-})
+//   if (audioElement.muted) {
+//     muteButton.innerHTML = '<i class="fas fa-volume-mute"></i>'
+//   } else {
+//     muteButton.innerHTML = '<i class="fas fa-volume-up"></i>'
+//   }
+// })
 
 function incorrectIndicator(){
   if (incorrectScore === 1){
