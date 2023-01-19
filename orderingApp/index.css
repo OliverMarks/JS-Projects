@@ -1,0 +1,89 @@
+
+body {
+    margin: 0;
+    font-family: 'Smythe', cursive;
+    display: flex;
+  flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    width: 600px;
+    height: 1161px;
+}
+.header {
+    height: 167px;
+     width: 600px;
+     color: white;
+    background-image: url(imgs/burger.jpeg);
+    background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center, center;
+  font-family: 'Smythe';
+font-style: normal;
+font-weight: 400;
+font-size: 22.4216px;
+padding: 5px;
+
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: row;
+    height: 140px;
+    width: 508px;
+    border-bottom: 2px solid grey; 
+    justify-content: flex-start;
+    align-items: center;
+}
+.description {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+.emoji {
+    font-size: 72px;
+    margin-right: 20px;
+}
+
+.addToMenu {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    font-size: 32px;
+    background-color: white;
+}
+
+
+.line {
+    border-bottom: 3px solid black;
+}
+
+
+
+
+
+
+
+.payment-details {
+        display: none;
+        position: fixed;
+        
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        height: 420px;
+        width: 350px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 6px 2px #666;
+        background-color: white;
+        color: black;
+    }
+    
+    .modal-inner{
+        width: 290px;
+        margin: 0 auto;
+    }
