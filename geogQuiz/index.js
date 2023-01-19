@@ -60,6 +60,7 @@ function startGame() {
 getData()
 
 function generateQuestion() {
+
   const questionDict = {
     'population': 'Which city has a larger population:',
     'longitude': 'Which city is furthest East: ',
@@ -229,7 +230,6 @@ function checkAnswer(cityX, displayedCities) {
 while (answerBtns.length > 0) {
   btnBox.removeChild(answerBtns[0])
 }
-
   generateQuestion()
 }
 
@@ -251,10 +251,17 @@ while (answerBtns.length > 0) {
 function incorrectIndicator(){
   if (incorrectScore === 1){
     quizWrapper.classList.add("red1")
+    quizWrapper.classList.add("shake")
+
   } else if  (incorrectScore === 2){
     quizWrapper.classList.add("red2")
+    quizWrapper.classList.add("bigShake")
+
   } else  {
     quizWrapper.classList.remove("red1", "red2")
+    quizWrapper.classList.remove("shake")
+    quizWrapper.classList.remove("bigShake")
+
   }
   }
 
