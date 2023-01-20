@@ -62,9 +62,9 @@ getData()
 function generateQuestion() {
 
   const questionDict = {
-    'population': 'Which city has a larger population:',
-    'longitude': 'Which city is furthest East: ',
-    'latitude': 'Which city is furthest North: '
+    'population': 'Which city has a larger population?',
+    'longitude': 'Which city is furthest East? ',
+    'latitude': 'Which city is furthest North? '
   }
 
   let currentTopic = topics[Math.floor(Math.random() * topics.length)]
@@ -77,7 +77,7 @@ function generateQuestion() {
     
     displayedCities = cities.slice(0,roundNumber+1)
     console.log(displayedCities)
-    let questionString = `${questionDict[currentTopic]} ${displayedCities.map(function(city){return city.name}).join(" or ")}`
+    let questionString = `${questionDict[currentTopic]}`
     
     for (let i = 0; i < roundNumber + 1; i++) {
       const answerBtn = document.createElement('button')
@@ -88,7 +88,7 @@ function generateQuestion() {
     }
      
    
-    questionString += "?"
+    
     questionElement.textContent = questionString
   }
 }
@@ -151,16 +151,17 @@ function startTimer() {
 while (answerBtns.length > 0) {
   btnBox.removeChild(answerBtns[0])
 }
+    scoreElement.textContent = 0
     incorrectScore = 0
     timeLeft = 60
     interval = 
-    quizWrapper.classList.remove("red1", "red2")
+    quizWrapper.classList.remove("red1", "red2", "shake", "bigShake")
     
     if (roundNumber === 2) {
       quizWrapper.style.display = "none"
       betweenRounds.style.display = "block"
       betweenRounds.innerHTML = `<div class="between-round">
-      <p> ${scores[0]} Correct, Not bad! </p> 
+      <p> Round Score: ${scores[0]} </p> 
       <p>Ready to take it up a notch? </p>
       <p>More cities and three answers to choose from!</p> 
       </div>`
@@ -170,7 +171,7 @@ while (answerBtns.length > 0) {
       betweenRounds.style.display = "block"
       betweenRounds.innerHTML = 
       `<div class="between-round">
-      <p>${scores[1]} Correct Good stuff!</p> 
+      <p>Round Score: ${scores[1]}</p> 
       <p>One More to go; time for hard mode</p>
       <p>All cities and four answers!</p> </div>`
     
