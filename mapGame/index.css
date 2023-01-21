@@ -1,0 +1,37 @@
+
+  #map {
+    height: 100vh;
+    
+  }
+  html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #generate-marker {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1;
+  }
+  
+  .question {
+    position: absolute;
+    top: 10px;
+    left: 500px;
+    z-index: 1;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    height: fit-content;
+    width: fit-content;
+    font-size: 30px;
+    padding: 0.65em; 
+    margin-bottom: 0.7em;
+    margin-top: 0.1em;
+    border-radius: 12px;
+ 
+}
