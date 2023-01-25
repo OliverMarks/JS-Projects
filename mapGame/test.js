@@ -1,124 +1,125 @@
 // import { LookupRegionResponse } from "@googlemaps/region-lookup";
-let map;
-let countries = {};
-let selectedCountry = {};
-let userSelectedCountry;
-let userMarker;
-let markerPlaced = false;
-let correctMarker;
-let geocoder;
-let countryLabels = [];
+let map
+let countries = {}
+let selectedCountry = {}
+let userSelectedCountry
+let userMarker
+let markerPlaced = false
+let correctMarker
+let geocoder
+let countryLabels = []
 let countryLayer
+let score = 0
 
 
 
-const resetBtn = document.getElementById("reset-btn");
-const question = document.getElementById("question");
-const submitBtn = document.getElementById("submit-btn");
+const nextBtn = document.getElementById("next-btn")
+const question = document.getElementById("question")
+const submitBtn = document.getElementById("submit-btn")
+const scoreBox = document.getElementById("score")
 
 
 
-const featureStyleOptions = {
-    strokeColor: "#e30909",
-    strokeOpacity: 1.0,
-    strokeWeight: 3.0,
-    fillColor: "#e30909",
-    fillOpacity: 0.5,
-  };
 
 const getData = () => {
     return fetch('country-details.json')
         .then(response => response.json())
         .then(data => {
-        countries = data;
-    });
-};
+        countries = data
+    })
+}
+
+
 getData()
     .then(() => {
     if (Object.keys(countries).length) {
-        selectedCountry = getCountry();
-        initMap();
+        selectedCountry = getCountry()
+        initMap()
+        
     }
     else {
-        console.error('No country data found');
+        console.error('No country data found')
     }
 })
     .catch(error => {
-    console.error(error);
-});
+    console.error(error)
+})
 function initMap() {
     if (typeof google !== 'undefined') {
         map = new google.maps.Map(document.getElementById("map"), {
-            center: { lat: 40.4637, lng: 3.7492 },
+            center: { lng: -38.149403182714195, lat: 42.18812797137536},
             zoom: 2,
             mapId: 'a3924b58325ef9ed',
             streetViewControl: false,
             mapTypeControl: false,
         });
 
-        countryLayer = map.getFeatureLayer('COUNTRY');
-        geocoder = new google.maps.Geocoder();
-
+        countryLayer = map.getFeatureLayer('COUNTRY')
+        geocoder = new google.maps.Geocoder()
         google.maps.event.addListener(map, 'click', function (event) {
             if (!markerPlaced) {
-                geocode(event.latLng);
-                markerPlaced = true;
+                geocode(event.latLng)
+                markerPlaced = true
             }
-        });
+        })
+
     }
 }
-resetBtn.addEventListener("click", function () {
+
+
+nextBtn.addEventListener("click", function () {
     if (markerPlaced) {
-        userMarker.setMap(null);
-        userMarker = null;
-        markerPlaced = false;
-        countryLayer.style = null;
+        userMarker.setMap(null)
+        userMarker = null
+        markerPlaced = false
+        countryLayer.style = null
     }
-    selectedCountry = getCountry();
-    question.textContent = ` ${selectedCountry.flag.emoji}`;
-    question.classList.remove("correct", "incorrect");
-});
+    map.setZoom(2)
+    map.panTo({ lng: -38.149403182714195, lat: 42.18812797137536})
+    selectedCountry = getCountry()
+    question.innerHTML = `<span class="emoji">${selectedCountry.flag.emoji}</span>`
+    question.classList.remove("correct", "incorrect")
+    submitBtn.disabled = true
+})
 
-submitBtn.addEventListener("click", function (){
-       
+submitBtn.addEventListener("click", function (){  
     geocode(location)
-
-    applyStyleToSelected(selectedCountry.name);
+    applyStyleToSelected(selectedCountry.name)
     userMarker.set('label', {
         text: `${userSelectedCountry}`,
         className: 'marker-label',
+    })
 
-        
-    }); 
     checkAnswer()
 })
 
-// google.maps.event.addListener(userMarker, 'ondrop', function() {
-//     geocode(userMarker.getPosition());
-//   });
+google.maps.event.addListener(userMarker, 'dragend', function() {
+    userSelectedCountry = ""
+    geocode(userMarker.getPosition())
+  });
 
 
 function getCountry() {
-    const countryKeys = Object.keys(countries);
-    const randomIndex = Math.floor(Math.random() * countryKeys.length);
-    const countryKey = countryKeys[randomIndex];
+    const countryKeys = Object.keys(countries)
+    const randomIndex = Math.floor(Math.random() * countryKeys.length)
+    const countryKey = countryKeys[randomIndex]
     selectedCountry = {
         name: getNestedValue(countries, countryKey, "name"),
         flag: getNestedValue(countries, countryKey, "flag"),
         code: getNestedValue(countries, countryKey, "code"),
-    };
-    question.textContent = ` ${selectedCountry.flag.emoji}`;
-    console.log(selectedCountry);
-    return selectedCountry;
+    }
+    question.innerHTML = `<span class="emoji">${selectedCountry.flag.emoji}</span>`
+    console.log(selectedCountry)
+    return selectedCountry
 }
 
 
 
 function getNestedValue(obj, key, nestedKey) {
     if (obj[key] && obj[key][nestedKey]) {
-        return obj[key][nestedKey];
+        return obj[key][nestedKey]
     }
-    return null;
+    return null
 }
 
 
@@ -126,39 +127,45 @@ function geocode(location) {
     geocoder.geocode({ 'location': location }, function (results, status) {
         if (status === 'OK') {
             if (results[3]) {
-                var address_components = results[3].address_components;
+                var address_components = results[3].address_components
                 for (var i = 0; i < address_components.length; i++) {
                     if (address_components[i].types[0] === "country" && address_components[i].types[1] === "political") {
-                        userSelectedCountry = address_components[i].long_name;
-                        break;
+                        userSelectedCountry = address_components[i].long_name
+                        break
                     }
                 }
             }
         }
-        placeUserMarker(location);
+        placeUserMarker(location)
         
-    });
+    })
 }
 
 function placeUserMarker(location) {
     userMarker = new google.maps.Marker({
         position: location,
-        // draggable: true,
+        draggable: true,
         map: map,
         animation: google.maps.Animation.Drop,
-    });
+    })
+    submitBtn.disabled = false
 }
 
 function checkAnswer() {
-    if (userSelectedCountry === selectedCountry.name) {
-        question.textContent = `Correct that's ${selectedCountry.name}`;
-        question.classList.add("correct");
+    if (userSelectedCountry.includes(selectedCountry.name)) {
+        question.textContent = `${selectedCountry.name}`
+        question.classList.add("correct")
+        score++
     }
     else {
-        question.textContent = `Wrong that's the flag of ${selectedCountry.name}`;
-        question.classList.add("incorrect");
-        console.log("incorrect");
+        question.textContent = `${selectedCountry.name}`
+        question.classList.add("incorrect")
+        console.log("incorrect")
     }
+    submitBtn.disabled = true
+    userMarker.setDraggable(false)
+    scoreBox.textContent = score
+
 }
 
 
@@ -166,10 +173,31 @@ function checkAnswer() {
 function applyStyleToSelected(countryName) {
    countryLayer.style = (options) => {
         if (options.feature.displayName == countryName) {
-          return featureStyleOptions;
+          return featureStyleOptions
         }
-      };
+      }
+
+      const featureStyleOptions = {
+        strokeColor: "#e30909",
+        strokeOpacity: 1.0,
+        strokeWeight: 3.0,
+        fillColor: "#e30909",
+        fillOpacity: 0.5,
+      }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 // // Headers
 // const headers = {
 //     "X-Goog-Api-Key": "AIzaSyAu0fUB9qD0-7S277XMZqIGXdNnLejKZgo",
