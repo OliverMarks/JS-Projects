@@ -93,37 +93,9 @@ submitBtn.addEventListener("click", function (){
     checkAnswer()
 })
 
-google.maps.event.addListener(userMarker, 'dragend', function() {
-    userSelectedCountry = ""
-    geocode(userMarker.getPosition())
-  });
 
 
-function getCountry() {
-    const countryKeys = Object.keys(countries)
-    const randomIndex = Math.floor(Math.random() * countryKeys.length)
-    const countryKey = countryKeys[randomIndex]
-    selectedCountry = {
-        name: getNestedValue(countries, countryKey, "name"),
-        flag: getNestedValue(countries, countryKey, "flag"),
-        code: getNestedValue(countries, countryKey, "code"),
-    }
-    question.innerHTML = `<span class="emoji">${selectedCountry.flag.emoji}</span>`
-    console.log(selectedCountry)
-    return selectedCountry
-}
-
-
-
-function getNestedValue(obj, key, nestedKey) {
-    if (obj[key] && obj[key][nestedKey]) {
-        return obj[key][nestedKey]
-    }
-    return null
-}
-
-
-function geocode(location) {
+  function geocode(location) {
     geocoder.geocode({ 'location': location }, function (results, status) {
         if (status === 'OK') {
             if (results[3]) {
@@ -148,8 +120,36 @@ function placeUserMarker(location) {
         map: map,
         animation: google.maps.Animation.Drop,
     })
+    userMarker.addListener('dragend', function() {
+        geocode(userMarker.getPosition())
+      });
     submitBtn.disabled = false
 }
+
+function getCountry() {
+    const countryKeys = Object.keys(countries)
+    const randomIndex = Math.floor(Math.random() * countryKeys.length)
+    const countryKey = countryKeys[randomIndex]
+    selectedCountry = {
+        name: getNestedValue(countries, countryKey, "name"),
+        flag: getNestedValue(countries, countryKey, "flag"),
+    }
+    question.innerHTML = `<span class="emoji">${selectedCountry.flag.emoji}</span>`
+    console.log(selectedCountry)
+    return selectedCountry
+}
+
+
+
+function getNestedValue(obj, key, nestedKey) {
+    if (obj[key] && obj[key][nestedKey]) {
+        return obj[key][nestedKey]
+    }
+    return null
+}
+
+
+
 
 function checkAnswer() {
     if (userSelectedCountry.includes(selectedCountry.name)) {
