@@ -5,23 +5,27 @@ let map
 let landmarks = {}
 let usedLandmarks = []
 let selectedLandmark = {}
-let userSelectedCountry
 let userMarker
 let marker
 let markerPlaced = false
 let markerCircle
-let correctMarker
 let geocoder
-let countryLabels = []
 // let countryLayer
 let score = 0
 
-
+const startScreen = document.getElementById("start-screen")
+const sidebarDisplay = document.getElementById("sidebar")
+const landmarkBtn = document.getElementById("landmark-button")
+const mapDisplay = document.getElementById("map")
 
 const nextBtn = document.getElementById("next-btn")
 const question = document.getElementById("question")
 const submitBtn = document.getElementById("submit-btn")
 const scoreBox = document.getElementById("score")
+const backBtn = document.getElementById("back-button")
+
+
+
 
 
 
@@ -59,6 +63,20 @@ function initMap() {
             });
 }
 }
+
+landmarkBtn.addEventListener("click",function (){
+    startScreen.style.display = "none"
+    mapDisplay.style.display = "block"
+    sidebarDisplay.style.display = "flex"
+})
+
+
+backBtn.addEventListener("click",function (){
+    startScreen.style.display = ""
+    mapDisplay.style.display = "none"
+    sidebarDisplay.style.display = "none"
+})
+
 
 nextBtn.addEventListener("click", function () {
     if (markerPlaced) {

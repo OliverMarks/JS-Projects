@@ -12,18 +12,51 @@
 <body>
 
     <div id="map"></div>
-    <div class="sidebar">
+    
+    <div class="start-screen" id="start-screen">
+            <div class="start-screen-box">
+            <h1>Test your World Geography</h1>
+                 <div class="quiz-category landmark-panel">
+                <i class="fa-solid fa-landmark-flag start-screen-icon"></i>
+                <button id="landmark-button">Landmarks</button>
+                 </div>
+    
+    
+                 <div class="quiz-category flags-panel">
+                    <i class="fa-solid fa-flag start-screen-icon"></i>
+                    <button>Flags</button>
+                     </div>
+
+
+                     <div class="quiz-category cities-panel">
+                        <i class="fa-solid fa-city start-screen-icon"></i>
+                        <button>Cities</button>
+                         </div>
+                        </div>
+    
+    
+    
+    
+    </div>
+    
+    
+    
+    
+    
+    <div class="sidebar" id="sidebar">
+        
         <h1>Where is this landmark?</h1>
         <div class="question" id="question"></div>
         <button id="submit-btn" disabled>Submit</button>
         <button id="next-btn">Next Question</button>
         <div class="score" id="score"></div>
+        <button id="back-button">Back</button>
 
     </div>
     
 
 
-
+    
     <script type="module" src="landmark.js"></script>
     <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAu0fUB9qD0-7S277XMZqIGXdNnLejKZgo&v=beta&libraries=geometry&callback=initMap">
