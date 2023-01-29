@@ -1,4 +1,4 @@
-// import { LookupRegionResponse } from "@googlemaps/region-lookup";
+
 let map
 let countries = {}
 let selectedCountry = {}
@@ -152,6 +152,7 @@ function getNestedValue(obj, key, nestedKey) {
 
 
 function checkAnswer() {
+    
     if (userSelectedCountry.includes(selectedCountry.name)) {
         question.innerHTML = `<i class="fa-solid fa-check check"></i>`
         question.classList.add("correct")

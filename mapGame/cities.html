@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>City City Bang Bang</title>
+</head>
+<body>
+
+    <div id="map"></div>
+    <div class="sidebar">
+        <h1>Where's this city at?</h1>
+        <div class="question" id="question"></div>
+        <div class="hint-icon-box">
+      
+            <div id="timezone-hint"><i class="fa-solid fa-clock hint-icons "></i></div>
+            <div id="currency-hint"><i class="fa-solid fa-dollar-sign hint-icons "></i></div>
+            <div id="country-hint"><i class="fa-solid fa-map-location-dot hint-icons "></i></div>
+        </div>
+        <button id="submit-btn" disabled>Submit</button>
+        <button id="next-btn">Next Question</button>
+        <div class="score" id="score"></div>
+        <a href="GeogQuizzerIndex.html"><button>Back</button></a>
+
+    </div>
+
+
+   
+
+
+    <script type="module" src="cities.js"></script>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAu0fUB9qD0-7S277XMZqIGXdNnLejKZgo&v=beta&libraries=geometry&callback=initMap">
+</script>
+</body>
+</html>
