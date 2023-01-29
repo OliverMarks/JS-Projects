@@ -29,21 +29,14 @@
   }
 
   .start-screen-box {
-    background-color: rgba(240, 248, 255, 0.8);
+    background-color: #253449f5;
+    position: absolute;
+    top: 0px;
+    left: 0px; 
+    z-index: 10;
+    width: 550px;
+    height: 100vh;
     
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    width: fit-content;
-    max-width: 400px;
-    min-width: 400px;
-    max-height: 600px;
-    min-height: 600px;
-    height: fit-content;
-    border-radius: 12px;
    
 }
   
@@ -260,18 +253,22 @@
 #play-button {
   position: absolute;
   left: 50px;
-  
-
+  top: 200px;
+  color: #253449f5;
+  border-color: aliceblue;
   width: 250px;
   padding: 5px;
+  z-index: 30;
 }
 
 .wrapper{
   position: absolute;
-  top: calc(50% - 50px);
-  left: calc(50% - 50px);
+  top: 325px;
+  left: 900px;
+  margin
 }
-.item{
+
+.item {
   transition: .5s;
   position: absolute;
   width: 100px;
@@ -285,10 +282,11 @@
   justify-content: center;
   align-items: center;
 }
+
 .controls{
   position: absolute;
-  top: 290px;
-  right: 210px;
+  top: 300px;
+  left: -5px;
   width: 99%;
   text-align: center;
 }
@@ -302,18 +300,23 @@
 
 .title {
   position: absolute;
-  top: 10px;
+  color:aliceblue;
+  top: 80px;
   left: 50px;
   font-size: 80px;
 }
 
 .info {
   position: absolute;
-  top: 260px;
+  color:aliceblue;
+
+  top: 350px;
   left: 50px;
 }
 
 .globe {
+  position: absolute;
+  left: 735px;
   padding: 20px;
   height: 400px;
   width: 400px;
