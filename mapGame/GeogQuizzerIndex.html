@@ -13,38 +13,56 @@
 </head>
 <body>
 
-    
+
     
     <div class="start-screen" id="start-screen">
+            
+        
+        <h1 class="title">
+            Welcome to <br />
+            <strong>GeoQuizzer</strong>
+            </h1>
 
-            <div class="start-screen-box">
-                <h1>Test your world geography</h1>
+        <h3 class="info">Use the arrows to select a Google Maps based Quiz</h3>
+        
+        <div class="start-screen-box">
                         
-                <div class="quiz-category landmark-panel">
-                         <i class="fa-solid fa-landmark-flag start-screen-icon"></i>
-                        <a href="landmark.html"> <button id="landmark-button">Landmarks</button></a>
-                          </div>
-    
-    
-                        <div class="quiz-category flags-panel">
-                        <i class="fa-solid fa-flag start-screen-icon"></i>
-                        <a href="flags.html"> <button id="flag-button">Flags</button></a>
-                        </div>
+                
+
+                <div class="wrapper">
+                    <div class="quiz-category landmark-panel item" data-link ="landmark.html" data-name="Landmarks">
+
+                    <i class="fa-solid fa-landmark-flag start-screen-icon" ></i>
+                    <!-- <a href="landmark.html"> <button id="landmark-button">Landmarks</button></a> -->
+                      </div>
 
 
-                        <div class="quiz-category cities-panel">
-                        <i class="fa-solid fa-city start-screen-icon"></i>
-                        <a href="cities.html"> <button>Cities</button></a>
-                         </div>
-                        
-                        
-            </div>
+                    <div class="quiz-category flags-panel item" data-link ="flags.html" data-name="Flags">
+                    <i class="fa-solid fa-flag start-screen-icon"></i>
+                    <!-- <a href="flags.html"> <button id="flag-button">Flags</button></a> -->
+                    </div>
+
+
+                    <div class="quiz-category cities-panel item" data-link ="cities.html" data-name="Cities">
+                    <i class="fa-solid fa-city start-screen-icon"></i>
+                    <!-- <a href="cities.html"> <button>Cities</button></a> -->
+                     </div>
+                  </div>
+                  
+                  <div class="controls selection-off">
+                    <div class="left selection-off" onclick="turnLeft()"><i class="fas fa-caret-left"></i></div>
+                    <div class="right selection-off" onclick="turnRight()"><i class="fas fa-caret-right"></i></div>
+                  </div>
+                       
+                        <img class="globe" src="imgs/globe-icon.png">
+                        <span id="play-button"></span>
+                    </div>
     
     
     
     
     </div>
     
-    
+    <script src="index.js"></script>
 </body>
 </html>
