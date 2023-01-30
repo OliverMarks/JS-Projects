@@ -20,7 +20,7 @@ const scoreBox = document.getElementById("score")
 
 const timezoneHint = document.getElementById("timezone-hint")
 const currencyHint = document.getElementById("currency-hint")
-const countryHint = document.getElementById("country-hint")
+// const countryHint = document.getElementById("country-hint")
 
 const getData = () => {
     return fetch('citiesAll.json')
@@ -105,9 +105,9 @@ function initMap() {
                     currencyHint.innerHTML =`${city.currency.code}`
                 })
 
-                countryHint.addEventListener("click", function(){
-                    countryHint.innerHTML =`${city.country.name}`
-                })
+                // countryHint.addEventListener("click", function(){
+                //     countryHint.innerHTML =`${city.country.name}`
+                // })
 
                 submitBtn.addEventListener("click", function (){  
                     checkAnswer()
@@ -180,7 +180,7 @@ function initMap() {
                 question.classList.remove("correct", "incorrect")
                 timezoneHint.innerHTML = `<i class="fa-solid fa-clock hint-icons"></i>`
                 currencyHint.innerHTML = `<i class="fa-solid fa-dollar-sign hint-icons"></i>`
-                countryHint.innerHTML = `<i class="fa-solid fa-map-location-pin hint-icons"></i>`
+                // countryHint.innerHTML = `<i class="fa-solid fa-map-location-pin hint-icons"></i>`
                 marker.setVisible(false);
                 submitBtn.disabled = true
                 });
