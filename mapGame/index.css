@@ -66,6 +66,14 @@
     align-items: center;
   }
 
+.backBtn { 
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    
+
+}
+
 
   #generate-marker {
     position: absolute;
