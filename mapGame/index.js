@@ -58,6 +58,15 @@ function makeATurn(){
   
 //function used to set the new position of the elements
 
+window.addEventListener("keydown", function(e){
+
+  if(e.key === "ArrowRight"){
+    turnRight();
+   } else if (e.key === "ArrowLeft") {
+      turnLeft();
+    }
+  })
+
 function turnRight(){
     let holder = itemsId.pop();
     itemsId.unshift(holder);
