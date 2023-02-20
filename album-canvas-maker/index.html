@@ -1,41 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-    <script defer src="index.js" type="module"></script>
-    <title>Album Canvas Maker</title>
-</head>
-
-<body>
+<html>
+  <head>
+    <title>Hello!</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="index.js"></script>
     
-        <div class="fixed top-0 left-0 bg-black w-10 h-screen">
+  </head>
+  <body>
+    <div class="page-container">
 
-        </div>
-
-
-
-        <div class = "canvas">
-
-
-
-            </div>
-
-
-
+        <div class="sidebar">
+    <h1>Search for album</h1>
+    <input type="text" placeholder="Search..." id="album-name">
+    <input type="number" placeholder="Select Grid Size" id="grid-size">
+    <div draggable="true" class="box" id="album-cover"></div>
     </div>
 
 
+    <div class="container" id="container">
+      <div draggable="true" class="box"></div>
+      <div draggable="true" class="box"></div>
+      <div draggable="true" class="box"></div>
+
+      <div draggable="true" class="box"></div>
+      <div draggable="true" class="box"></div>
+      <div draggable="true" class="box"></div>
+    </div>
 
 
+   </div>
 
 
-    
+   <script defer src="index.js"></script>
 
-</body>
-
-
+  </body>
 </html>

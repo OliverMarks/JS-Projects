@@ -1,0 +1,48 @@
+body {
+    font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+    margin: 2em;
+  }
+
+  .page-container {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+  
+.sidebar {
+    padding: 20px;
+}
+
+.sidebar > input {
+    margin-bottom: 20px;
+}
+
+  .container {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .box {
+    border: 3px solid #666;
+    background-color: #ddd;
+    border-radius: .5em;
+    padding: 10px;
+    cursor: move;
+    height:150px;
+    width:150px
+  }
+  
+  .box.over {
+    border: 3px dotted #666;
+  }
+  
+  [draggable] {
+    user-select: none;
+  }
+
+  img {
+    height: 150px;
+    width: 150px
+  }

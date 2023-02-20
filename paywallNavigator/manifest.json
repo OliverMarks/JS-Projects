@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "Get all <p> tags",
+    "version": "1.0",
+    "permissions": ["activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["ext.js"]
+      }
+    ]
+  }
+  

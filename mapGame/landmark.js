@@ -1,6 +1,5 @@
 import { landmarkData } from './landmarkData.js'
 
-// import { LookupRegionResponse } from "@googlemaps/region-lookup";
 let map
 let landmarks = {}
 let usedLandmarks = []
@@ -10,7 +9,6 @@ let marker
 let markerPlaced = false
 let markerCircle
 let geocoder
-// let countryLayer
 let score = 0
 
 

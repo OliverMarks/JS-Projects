@@ -7,11 +7,8 @@ let marker;
 let userMarker;
 let markerPlaced = false;
 let markerCircle
-
-// let countryLayer
 let score = 0
-// let geocoder
-// let country
+
 
 const nextBtn = document.getElementById("next-btn")
 const question = document.getElementById("question")
@@ -53,14 +50,12 @@ function initMap() {
             mapTypeControl: false
         });
 
-        // geocoder = new google.maps.Geocoder();
 
 
         google.maps.event.addListener(map, 'click', function (event) {
             if (!markerPlaced) {
                 placeUserMarker(event.latLng);
                 markerPlaced = true;
-                // geocode(event.latLng);
 
             }
         });
@@ -105,9 +100,7 @@ function initMap() {
                     currencyHint.innerHTML =`${city.currency.code}`
                 })
 
-                // countryHint.addEventListener("click", function(){
-                //     countryHint.innerHTML =`${city.country.name}`
-                // })
+               
 
                 submitBtn.addEventListener("click", function (){  
                     checkAnswer()
