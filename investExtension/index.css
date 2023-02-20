@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    min-width: 565px;
+    max-height: 400px;
+    border-radius: 15px;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    position: absolute;
+}
+
+
+.coin-container {
+    padding: 5px; 
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+
+}
+
+img {
+    height: 25px;
+    width: 25px; 
+}
+
+#doge {
+    display:none
+}
+
+#xrp {
+    display:none
+}
+
+#vet {
+    display:none
+}
+
+#refresh {
+    cursor: pointer;
+    position: relative;
+}
