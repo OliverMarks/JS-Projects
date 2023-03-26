@@ -45,6 +45,9 @@ getData()
     console.error(error)
 })
 function initMap() {
+     
+
+
     if (typeof google !== 'undefined') {
         map = new google.maps.Map(document.getElementById("map"), {
             center: { lng: -38.149403182714195, lat: 42.18812797137536},
@@ -84,7 +87,9 @@ nextBtn.addEventListener("click", function () {
 
 submitBtn.addEventListener("click", function (){  
     geocode(location)
-    applyStyleToSelected(selectedCountry.name)
+    applyStyleToSelected(selectedCountry.name);
+
+    console.log(selectedCountry.name)
     userMarker.set('label', {
         text: `${userSelectedCountry}`,
         className: 'marker-label',
@@ -161,7 +166,7 @@ function checkAnswer() {
     else {
         question.textContent = `${selectedCountry.name}`
         question.classList.add("incorrect")
-        console.log("incorrect")
+       
     }
     submitBtn.disabled = true
     userMarker.setDraggable(false)
@@ -171,20 +176,25 @@ function checkAnswer() {
 
 
 
+  
 function applyStyleToSelected(countryName) {
-   countryLayer.style = (options) => {
+    countryLayer.style = (options) => {
         if (options.feature.displayName == countryName) {
           return featureStyleOptions
         }
       }
 
-      const featureStyleOptions = {
+    
+    const featureStyleOptions = {
         strokeColor: "#e30909",
         strokeOpacity: 1.0,
         strokeWeight: 3.0,
         fillColor: "#e30909",
         fillOpacity: 0.5,
       }
+
+  
+     
 }
 
 
