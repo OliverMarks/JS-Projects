@@ -5,6 +5,7 @@ body {
     min-width: 565px;
     max-height: 400px;
     border-radius: 15px;
+    color: black; 
 }
 
 .container {

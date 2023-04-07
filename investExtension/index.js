@@ -1,7 +1,6 @@
 let total = 0
 
-document.cookie = "name=value; expires=date; path=path; domain=domain; SameSite=None; Secure";
-
+// document.cookie = "name=value; expires=date; path=path; domain=domain; SameSite=None; Secure";
 
 fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
     .then(res => {
@@ -98,4 +97,7 @@ fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
                 document.getElementById("vet").style.display = "block"}) 
 
                 document.getElementById("refresh").addEventListener("click", () => {
-                    window.location.reload();})
+                    location.reload();
+                })
+
+                  
