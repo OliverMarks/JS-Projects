@@ -1,0 +1,91 @@
+.container {
+  margin: 0;
+  display: flex;
+  flex-direction: row;  
+  font-family: 'Source Code Pro', monospace;
+
+}
+
+
+.sidebar-container {
+  color: white ; 
+  background-color: black ;
+  height: 100vh; 
+  width: 20%; 
+  margin-right: 2rem;
+  padding-left: 1rem;
+
+}
+
+.calendar-container {
+  display: flex;
+  height: 100vh;
+  width: 50%;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+
+  
+
+}
+
+.day-container {
+    
+
+    width: 100%; 
+    border: 0.1rem solid black;
+    padding: 1rem;
+}
+
+
+.clickable-span {
+  margin-right: 2px;
+  border: 1px solid blueviolet; 
+ 
+  padding-left: 2px; 
+  padding-right: 2px;
+  border-radius: 10%;
+}
+
+.clickable-span:hover{
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: blueviolet; 
+  color: white;
+
+}
+
+
+select {
+  border: none;
+  border-radius: 10%;
+  cursor: pointer;
+  min-width: 12px;
+  font-family: 'Source Code Pro', monospace;
+  background-color: blueviolet;
+  color: white;  
+
+}
+
+
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+  list-style: none;
+  cursor: pointer;
+  border: 2px solid black;
+  padding: 12px;
+}
+
+.active {
+  border: 2px solid blueviolet; 
+  color: black;
+}
+
+.correctTab {
+  background-color: green;
+  color: white; 
+}
