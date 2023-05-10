@@ -1,52 +1,45 @@
-import { useState, useEffect } from "react"
-
-
-export default function Tuesday ({setPeople, people}) {
-
-    const options = people.map(person => { 
-    return (
-    <option value = {person}>{person}</option>)
-})
-
-
-const addToList = (object, array, state) => {
-    if (array.includes(object)) {
-        return
-    }
-    state( prev => [...prev, object])
-}
-
-
-const [tuesAnswers, setTuesAnswers] = useState(() => {
-    return JSON.parse(localStorage.getItem('tuesAnswers'))
-}) 
-
-useEffect (() => {
-    localStorage.removeItem('removeAnswers')
-    localStorage.setItem('tuesAnswers', JSON.stringify(tuesAnswers));
- }), [tuesAnswers] 
+import { useState, useEffect, useContext } from "react"
+import { SelectionContext } from "../App"
 
 
 
-        // const checkAnswers  = () => {
-        //         if (answers.includes("Clem")) 
-        //         return setIsDayCorrect(prev => [...prev, {Mon: true}])
-        // }
+export default function Tuesday ({day, inventory, addToInventory}) {
 
-        const handleSelectChange = (e) => {
-            setTuesAnswers(e.target.value);
-          };
+    const peopleOptions = inventory.people.map((person, idx) => { 
+        return (
+        <option value = {person} key={idx}>{person}</option>)
+    })
+
+    const itemOptions = inventory.items.map(item => { 
+        return (
+        <option value = {item}>{item}</option>)
+    })
+
+    
+
+const { selections, updateSelection } = useContext(SelectionContext);
+
+  // Handle the select element change and update the context state
+        function handleSelectChange(event) {
+                const { name, value } = event.target;
+                 updateSelection(day, name, value);
+                }
+
+        
 
     return (
         <div className="day-container">
             <h1>Tuesday</h1>
-            <p>Another day with these clowns. <select className="name-selector" type="select" onChange={handleSelectChange} value={tuesAnswers}>
+            <p>Another day, another dollar. I met up with the lads again for our usual post work pint. <select className="name-selector" type="select" name="option1" value={selections[day]?.option1} onChange={handleSelectChange}>
                 <option value=""></option>
-                {options}
-            </select> had his fucking black hat on again, does he not own any other clothing? 
-                <span className="clickable-span" onClick={() => addToList("Clem", people, setPeople)}>Clem</span> 
-             didn't stay for long as per. Where is he always skipping off to and why the grin?</p>
-            </div>
+                {peopleOptions}
+            </select> seemed anxious and kept taking his <select className="name-selector" type="select" name="option2" value={selections[day]?.option2} onChange={handleSelectChange}>
+                <option value=""></option>
+                {itemOptions}
+            </select> off to stroke his hair. What was he so worried about? 
+                <span className="clickable-span" onClick={() => addToInventory("Clem", "people")}>Clem</span> 
+             didn't stay for long as per. Where is he always skipping off to and why is he always winking at people? Is it something from his police days?</p>
+            </div> 
     )
     
 }

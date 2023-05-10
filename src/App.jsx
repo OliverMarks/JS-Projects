@@ -1,5 +1,9 @@
 import { useState, useEffect, createContext } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
+
 import Sidebar from "./components/sidebar"
 import Monday from './components/Monday'
 import Tuesday from './components/Tuesday'
@@ -9,7 +13,11 @@ import Friday from './components/Friday'
 import Saturday from './components/Saturday'
 import Sunday from './components/Sunday'
 
+import GameOver from './components/gameOver'
+
+
 import './App.css'
+import * as _ from 'lodash';
 
 
 
@@ -17,38 +25,125 @@ import './App.css'
   
 
 function App() {
-  const [isMounted, setIsMounted] = useState(false)
-  const [people, setPeople] = useState([])
-  const [items, setItems] = useState([])
-  const [locations, setLocations] = useState([])
+
+  
+  const [inventory, setInventory] = useState({
+    people: [],
+    items: [],
+    locations: [],
+  })
+
+
+
 
   const [selections, setSelections] = useState({})
 
-// why isnt this clearing local storage on page refresh? 
+  function updateSelection(day, option, value) {
+    setSelections(prevSelections => ({
+      ...prevSelections,
+      [day]: {
+        ...prevSelections[day],
+        [option]: value
+      }
+    }));
+  }
 
-  // useEffect (() => {
-  //   if (isMounted === false) {
-  //     localStorage.clear()
-  //       setIsMounted(true)
-  //     }
-  //     return 
-      
-  // }, [])
-
-
-
-
-const [isMonCorrect ,setIsMonCorrect] = useState(false)
-const [isWedsCorrect ,setIsWedsCorrect] = useState(false)
-
-    const checkSubmit = () => {
-       const monAnswers = JSON.parse(localStorage.getItem('monAnswers'))
-       if (monAnswers === "Clem") {
-            setIsMonCorrect(true)
+  function addToInventory (object, category) {
+    if (inventory[category].includes(object)) {
+      return
     }
+    setInventory(prevInventory => ({
+      ...prevInventory,
+      [category]: [...prevInventory[category], object]
+    }))
   }
 
 
+
+  const [answersSubmitted, setAnswersSubmitted] = useState(false)
+
+  const [isDayCorrect, setIsDayCorrect] = useState({
+    Monday: null,
+    Tuesday: null,
+    Wednesday: null,
+    Thursday: null,
+    Friday: null,
+    Saturday: null,
+    Sunday: null
+  })
+
+
+
+
+
+  const answers = {
+    Monday: {
+      option1: 'Clem'
+    },
+    Tuesday:{
+      option1: 'Paul',
+      option2: 'Black hat'
+    },
+    Wednesday: {
+      option1:'Paul',
+      option2:'Clem',
+      option3: 'Town',
+      option4: 'Black hat'
+    }, 
+    Thursday:{
+      option1:'Paul'
+    },
+    Friday:{
+      option1:'Canal Boat',
+      option2:'Stinky Pete', 
+      option3: 'Paul',
+      option4: 'Clem'
+    },
+    Saturday:{
+      option1: 'Velvet Trousers', 
+      option2: 'Clem'
+    },
+    Sunday:{ 
+      option1: 'Paul', 
+      option2: 'Canal Boat',
+      option3: 'Velvet Trousers',
+      option4: 'Paul',
+      option5: 'Stinky Pete', 
+      option6: 'Clem' 
+  }
+}
+
+
+
+  
+  const checkSubmit = () => {
+      setAnswersSubmitted(true)
+      for (let day in selections) {
+        if (_.isEqual(answers[day], selections[day])) {
+         setIsDayCorrect(prevDays => ({
+           ...prevDays,
+           [day]: true
+         }));
+        } else {
+         setIsDayCorrect(prevDays => ({
+           ...prevDays,
+           [day]: false
+         }));
+        }
+       }
+      
+  };
+
+      const tabStyling = (day) => {
+        if (isDayCorrect[day] && answersSubmitted) {
+          return "correct-tab"
+        } else if (!isDayCorrect[day] && answersSubmitted) {
+           return "incorrect-tab"
+        } else { 
+          return ""}
+        }
+
+        const [tabRef] = useAutoAnimate()
 
 
   return (
@@ -56,80 +151,62 @@ const [isWedsCorrect ,setIsWedsCorrect] = useState(false)
 
     <div className='container'>
         <Sidebar
-        people = {people}
-        items = {items}
-        locations ={locations}
+        inventory = {inventory}
         />
       
-    <div className='calendar-container'>
-      <Tabs  selectedTabClassName={"active"}>
+    <div className="calendar-container">
+      <Tabs  selectedTabClassName={"active"}  >
+
     <TabList className={"tabs"}>
-      <Tab className={isMonCorrect ? "correctTab" : null}>Monday</Tab>
-      <Tab >Tuesday</Tab>
-      <Tab className={isWedsCorrect ? "correctTab" : null}>Wednesday</Tab>
-      <Tab >Thursday</Tab>
-      <Tab >Friday</Tab>
-      <Tab >Saturday</Tab>
-      <Tab >Sunday</Tab>
+      <Tab className = {tabStyling("Monday")}> Monday </Tab>
+      <Tab className = {tabStyling("Tuesday")} >Tuesday</Tab>
+      <Tab className = {tabStyling("Wednesday")}>Wednesday</Tab>
+      <Tab className = {tabStyling("Thursday")} >Thursday</Tab>
+      <Tab className = {tabStyling("Friday")} >Friday</Tab>
+      <Tab className = {tabStyling("Saturday")} >Saturday</Tab>
+      <Tab className = {tabStyling("Sunday")} >Sunday</Tab>
       <button onClick={checkSubmit}>Submit</button>
     </TabList>
-
-
-    
-    <TabPanel>
+    <TabPanel >
     <Monday
         day = "Monday"
-        setPeople = {setPeople}
-        people = {people}
-        setItems = {setItems}
-        items = {items}
-        setLocations = {setLocations}
-        locations = {locations}
-        
-
+        inventory = {inventory}
+        addToInventory = {addToInventory}
           />
     </TabPanel>
     
     <TabPanel>
     <Tuesday
-        setPeople = {setPeople}
-        people = {people}
-        setLocations = {setLocations}
-        locations = {locations}
+        day = "Tuesday" 
+        inventory = {inventory}
+        addToInventory = {addToInventory}
           />
     </TabPanel>
 
 
     <TabPanel>
     <Wednesday 
-          setPeople = {setPeople}
-          people = {people}
-          setLocations = {setLocations}
-          locations = {locations}
-          items = {items}
-            />
+          day = "Wednesday"
+          inventory = {inventory}
+      />
 
     </TabPanel>
 
     <TabPanel>
     <Thursday 
-          setPeople = {setPeople}
-          people = {people}
-          setItems = {setItems}
-          items = {items}
-          setLocations = {setLocations}
-          locations = {locations}
+          day = "Thursday"
+          inventory = {inventory}
+          addToInventory = {addToInventory}
+
             />
 
     </TabPanel>
 
     <TabPanel>
     <Friday
-          setPeople = {setPeople}
-          people = {people}
-          setLocations = {setLocations}
-          locations = {locations}
-          items = {items}
+          day = "Friday" 
+          inventory = {inventory}
+          addToInventory = {addToInventory}
             />
 
     </TabPanel>
@@ -137,11 +214,9 @@ const [isWedsCorrect ,setIsWedsCorrect] = useState(false)
 
     <TabPanel>
     <Saturday
-          setPeople = {setPeople}
-          people = {people}
-          setLocations = {setLocations}
-          locations = {locations}
-          items = {items}
+          day = "Saturday" 
+          inventory = {inventory}
+          addToInventory = {addToInventory}
             />
 
     </TabPanel>
@@ -150,20 +225,19 @@ const [isWedsCorrect ,setIsWedsCorrect] = useState(false)
 
     <TabPanel>
     <Sunday
-          setPeople = {setPeople}
-          people = {people}
-          setLocations = {setLocations}
-          locations = {locations}
-          items = {items}
+          day = "Sunday" 
+          inventory = {inventory}
+          addToInventory = {addToInventory}
             />
 
     </TabPanel>
 
-  
-  
   </Tabs>
+
   </div>
      
+  {Object.values(isDayCorrect).every(value => value) ? <GameOver /> : null}
+
         </div>
  </SelectionContext.Provider>
 
@@ -172,7 +246,6 @@ const [isWedsCorrect ,setIsWedsCorrect] = useState(false)
 }
 
 export default App;
-
 
 
 
