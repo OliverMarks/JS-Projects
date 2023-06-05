@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "./components/searchBar";
 import MovieCard from "./components/MovieCard";
+import Watched from "./components/watched";
 
 function App() {
   const [watchList, setWatchList] = useState([]);
@@ -32,51 +33,51 @@ function App() {
   }, [watchedList]);
 
   // Get suggested movies based on watchlist and watchedlist
-  useEffect(() => {
-    async function getSuggestedMovies() {
-      const watchlistIds = watchList.map((movie) => movie.id);
-      const watchedlistIds = watchedList.map((movie) => movie.id);
-      const allIds = [...watchlistIds, ...watchedlistIds];
+  // useEffect(() => {
+  //   async function getSuggestedMovies() {
+  //     const watchlistIds = watchList.map((movie) => movie.id);
+  //     const watchedlistIds = watchedList.map((movie) => movie.id);
+  //     const allIds = [...watchlistIds, ...watchedlistIds];
 
-      // Use GPT to get suggested movie ids
-      const gptResponse = await axios.post(
-        "https://api.openai.com/v1/engines/davinci-codex/completions",
-        {
-          prompt: `Suggest some movies similar to ${allIds.join(
-            ","
-          )}. Include title, overview, and poster.`,
-          max_tokens: 60,
-          n: 1,
-          stop: "Poster:",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          },
-        }
-      );
-      const suggestedIds = gptResponse.data.choices[0].text
-        .split("\n")
-        .filter((line) => line.startsWith("ID:"))
-        .map((line) => parseInt(line.replace("ID:", "")));
+  //     // Use GPT to get suggested movie ids
+  //     const gptResponse = await axios.post(
+  //       "https://api.openai.com/v1/engines/davinci-codex/completions",
+  //       {
+  //         prompt: `Suggest some movies similar to ${allIds.join(
+  //           ","
+  //         )}. your response should consist of 5 movie titles and just their titles`,
+  //         max_tokens: 60,
+  //         n: 1,
+  //         stop: "titles:",
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+  //         },
+  //       }
+  //     );
+  //     const suggestedIds = gptResponse.data.choices[0].text
+  //       .split("\n")
+  //       .filter((line) => line.startsWith("ID:"))
+  //       .map((line) => parseInt(line.replace("ID:", "")));
 
-      // Fetch suggested movies from TMDB API
-      const suggestedMoviesResponse = await axios.get(
-        `https://api.themoviedb.org/3/movie/${suggestedIds.join(",")}`,
-        {
-          params: {
-            api_key: process.env.REACT_APP_TMDB_API_KEY,
-          },
-        }
-      );
-      const suggestedMoviesData = suggestedMoviesResponse.data.results;
+  //     // Fetch suggested movies from TMDB API
+  //     const suggestedMoviesResponse = await axios.get(
+  //       `https://api.themoviedb.org/3/movie/${suggestedIds.join(",")}`,
+  //       {
+  //         params: {
+  //           api_key: process.env.REACT_APP_TMDB_API_KEY,
+  //         },
+  //       }
+  //     );
+  //     const suggestedMoviesData = suggestedMoviesResponse.data.results;
 
-      setSuggestedMovies(suggestedMoviesData);
-    }
+  //     setSuggestedMovies(suggestedMoviesData);
+  //   }
 
-    getSuggestedMovies();
-  }, [watchList, watchedList]);
+  //   getSuggestedMovies();
+  // }, [watchList, watchedList]);
 
   // Search movies
   async function handleSearchMovies(query) {
@@ -107,6 +108,7 @@ function App() {
       // Add movie to watchedlist
       function handleWatchedMovie(movie) {
       setWatchedList((prevWatchedList) => [...prevWatchedList, movie]);
+      
       setWatchList((prevWatchList) =>
       prevWatchList.filter((item) => item.id !== movie.id)
       );
@@ -124,26 +126,36 @@ function App() {
       <div className="bg-gray-800 py-4">
       <div className="container mx-auto flex justify-between items-center">
       <h1 className="text-2xl font-semibold text-gray-200">Movie App</h1>
-      <SearchBar onSearch={handleSearchMovies} />
+      
+      
+      <SearchBar 
+      onSearch={handleSearchMovies}
+      handleAddMovie = {handleAddMovie} />
       </div>
       </div>
       <div className="container mx-auto py-8">
       <div className="flex flex-wrap -mx-4">
+      
+      
       {searchResults.map((movie) => (
       <div key={movie.id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8">
+      
+      
       <MovieCard
-      movie={movie}
-      onAdd={handleAddMovie}
-      isWatched={watchedList.some((item) => item.id === movie.id)}
-      onWatched={handleWatchedMovie}
-      />
+                   movie={movie}
+                   handleRemoveMovie={handleRemoveMovie}
+                   onWatched={handleWatchedMovie}
+                 />
+
       </div>
       ))}
       {watchList.map((movie) => (
       <div key={movie.id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8">
+      
+      
       <MovieCard
                    movie={movie}
-                   onRemove={handleRemoveMovie}
+                   handleRemoveMovie={handleRemoveMovie}
                    onWatched={handleWatchedMovie}
                  />
       </div>
@@ -152,8 +164,8 @@ function App() {
       <div key={movie.id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8">
       <MovieCard
                    movie={movie}
-                   onRemove={handleRemoveWatchedMovie}
-                   isWatched
+                   handleRemoveMovie={handleRemoveMovie}
+                   onWatched={handleWatchedMovie}
                  />
       </div>
       ))}
@@ -167,9 +179,23 @@ function App() {
       />
       </div>
       ))}
+      
+      
+      
+      <Watched
+      watchedMovies={watchedList}
+      handleRemoveWatchedMovie = {handleRemoveWatchedMovie}/>
+      
+      
       </div>
+      
+      
       </div>
+      
       </div>
+
+    
+      
       );
       }
       

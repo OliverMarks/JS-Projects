@@ -1,6 +1,6 @@
 import React from "react";
 
-function MovieCard({ movie, onAdd, onWatched, isWatched }) {
+function MovieCard({ movie, handleRemoveMovie, onWatched, isWatched }) {
   return (
     <div className="bg-white rounded-md shadow-md">
       {movie.poster_path && (
@@ -24,10 +24,10 @@ function MovieCard({ movie, onAdd, onWatched, isWatched }) {
           ) : (
             <>
               <button
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
-                onClick={() => onAdd(movie)}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                onClick={() => handleRemoveMovie(movie)}
               >
-                Add to Watchlist
+                Remove from Watchlist
               </button>
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded ml-2"
