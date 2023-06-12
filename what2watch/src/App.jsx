@@ -97,10 +97,10 @@ function App() {
      
       <h1 className="flex justify-center mb-2 font-bold">Your Watch List</h1>
 
-      <div className="flex flex-wrap -mx-4">
+      <div className="w-full flex mx-4 scroll-smooth flex-row overflow-hidden">
       
       {watchList.map((movie) => (
-      <div key={movie.id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8">
+      <div key={movie.id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8 ">
       
       
       <MovieCard
