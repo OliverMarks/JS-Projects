@@ -2,7 +2,7 @@ import React from "react";
 
 function MovieCard({ movie, handleRemoveMovie, onWatched, isWatched }) {
   return (
-    <div className="bg-white rounded-md shadow-md px-2 py-2">
+    <div className="bg-white rounded-md shadow-md px-2 py-2 w-[300px]">
       {movie.poster_path && (
         <img
           className="w-full rounded-t-md"
@@ -12,7 +12,7 @@ function MovieCard({ movie, handleRemoveMovie, onWatched, isWatched }) {
       )}
       <div className="px-4 py-2">
         <h2 className="font-semibold text-lg">{movie.title}</h2>
-        <p className="text-sm text-gray-600 mb-2">{movie.overview}</p>
+        <p className="text-xs md:text-sm text-gray-600 mb-2">{movie.overview}</p>
         <div className="flex justify-between items-center">
           {isWatched ? (
             <button

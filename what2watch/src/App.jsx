@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+
 import SearchBar from "./components/searchBar";
 import MovieCard from "./components/MovieCard";
 import Watched from "./components/watched";
@@ -97,23 +99,18 @@ function App() {
      
       <h1 className="flex justify-center mb-2 font-bold">Your Watch List</h1>
 
-      <div className="w-full flex mx-4 scroll-smooth flex-row overflow-hidden">
-      
-      {watchList.map((movie) => (
-      <div key={movie.id} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8 ">
-      
-      
+      <div className="w-full flex mx-2 scroll-smooth flex-row overflow-x-auto snap-x-mandatory">
+  {watchList.map((movie) => (
+    <div key={movie.id} className="w-full lg:w-1/3 xl:w-1/4 px-4 mb-8 scroll-snap-align-start">
       <MovieCard
-                   movie={movie}
-                   handleRemoveMovie={handleRemoveMovie}
-                   onWatched={handleWatchedMovie}
-                 />
-      </div>
-      ))}
-      
-      
-      
-      </div>
+        movie={movie}
+        handleRemoveMovie={handleRemoveMovie}
+        onWatched={handleWatchedMovie}
+      />
+    </div>
+  ))}
+</div>
+
       
       <Watched
       watchedMovies={watchedList}
