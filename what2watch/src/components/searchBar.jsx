@@ -34,11 +34,13 @@ const SearchBar = ({ handleAddMovie }) => {
   };
 
   return (
-    <div>
+    <div className="px-2"> 
+      <h1 className="text-2xl font-semibold text-gray-200">What2Watch</h1>
+
       <form onSubmit={handleSearch}>
         <label htmlFor="search">
           <input
-            className="border-black-400 border-2 pl-2 w-screen"
+            className="border-black-400 border-2 pl-2 w-full"
             type="text"
             placeholder="Search for movies"
             value={searchTerm}

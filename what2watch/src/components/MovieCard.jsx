@@ -2,7 +2,7 @@ import React from "react";
 
 function MovieCard({ movie, handleRemoveMovie, onWatched, isWatched }) {
   return (
-    <div className="bg-white rounded-md shadow-md">
+    <div className="bg-white rounded-md shadow-md px-2 py-2">
       {movie.poster_path && (
         <img
           className="w-full rounded-t-md"
