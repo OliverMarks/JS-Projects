@@ -53,15 +53,16 @@ export default function Watched({ watchedMovies, handleRemoveWatchedMovie }) {
           return (
             <li key={movie.id} className="bg-white p-2 rounded-xl m-1 shadow-lg flex gap-2">
               {movie.title}{" "}
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center hover:cursor-pointer">
                 <FontAwesomeIcon
+                  className="hover:cursor-pointer"
                   onClick={() => handleLike(movie.title)}
                   className="ml-2"
                   icon={movieReaction.liked ? faUpSolid : faThumbsUp}
                 />
                 <FontAwesomeIcon
                   onClick={() => handleDislike(movie.title)}
-                  className="ml-2"
+                  className="ml-2 "
                   icon={movieReaction.disliked ? faDownSolid : faThumbsDown}
                 />
               </div>
