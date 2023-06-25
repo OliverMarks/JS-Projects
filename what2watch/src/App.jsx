@@ -75,17 +75,21 @@ function App() {
     }
   
     return (
-      <div>
-      {userName && (
-        <div>
-          {/* <h3>Welcome, {userName}!</h3> */}
-          <button className="bg-gray-200 p-1 rounded-lg" onClick={signOutUser}>Sign Out</button>
+      <div className="flex flex-row items-center justify-center mr-2">
 
-          <img src={userPhotoURL} alt="Profile" className="rounded-full h-16 w-16 mr-4" />
+      {userName && (
+        <div className="flex flex-row items-center justify-center mr-2">
+          {/* <h3>Welcome, {userName}!</h3> */}
+          {/* <button className="bg-gray-200 px-2 rounded-lg text-xs h-8" onClick={signOutUser}>Sign Out</button> */}
+          <div className="relative">
+          <img src={userPhotoURL} alt="Profile" className="rounded-full h-16 w-16 mr-4"  />
+          <div onClick={signOutUser}
+          class="opacity-0 hover:opacity-100 hover:bg-red-800 hover:cursor-pointer rounded-full duration-300 absolute inset-0 z-10 flex justify-center items-center text-white font-semibold h-16 w-16">Sign Out</div>
+          </div>
         </div>
       )}
       {!userName && (
-        <button className="bg-gray-200 p-1 rounded-lg mr-2" onClick={signInWithGoogle}>Sign In with Google</button>
+        <button className="bg-gray-200 p-1 rounded-full mr-2 h-16 w-16 " onClick={signInWithGoogle}>Sign In</button>
       )}
     </div>
   )
