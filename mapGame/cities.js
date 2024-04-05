@@ -85,7 +85,7 @@ function initMap() {
                         animation: google.maps.Animation.Drop,
                     })
                     userMarker.addListener('dragend', function() {
-                        // geocode(userMarker.getPosition())
+                        geocode(userMarker.getPosition())
                       });
                     submitBtn.disabled = false
                 }

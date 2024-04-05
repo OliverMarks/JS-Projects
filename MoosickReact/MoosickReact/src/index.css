@@ -1,0 +1,267 @@
+body, article, button, h1, h2, h3, h4, h5, h6, footer  {
+	font-family: "Courier New", monospace;	}
+
+
+  body { 
+    background-color: whitesmoke;
+    margin: 0;
+    overflow-x: auto;
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    justify-content: center;
+}
+
+  /* Navigation bar */
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+.ulnav {
+    overflow: hidden;
+    background-color: black;
+    margin-top: 0;
+    margin-bottom: 0; 
+    margin-left: 0;
+    border: 0; 
+    width: 100vw;
+    
+    border-bottom: whitesmoke;
+  }
+  
+  li {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li a  {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Nav bar hovers*/  
+  
+  .home:hover { 
+      background-color: white;
+      color: #102542ff;
+      cursor: pointer;
+
+  }
+  
+  .blognav:hover {
+    background-color: #FAC60E; 
+    cursor: pointer;
+    /* was #111 */ 
+  }
+  
+  .Sketchingsnav:hover {
+    background-color: #8aa29eff;
+    cursor: pointer;
+    /* was #111 */ 
+  }
+  
+  .moosicknav:hover {
+    background-color: #824c71ff;
+    cursor: pointer;
+    /* was #111 */ 
+  }
+  
+  .header {
+   
+    color: black;
+    padding: 4rem; 
+  }
+
+
+  .slide-container {
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    justify-content: center;
+    height:auto;
+    width: 80vw; 
+    gap: 500px;
+    overflow-x: scroll;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    margin-left: 4rem;
+    
+  }
+
+ 
+
+
+  /* Vinyl slide animation  */
+  
+  .project-box__inner {
+    position: relative;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* margin: 42px auto 0;
+    padding-bottom: 18px; */
+}
+.project-box__image {
+  height: 300px; 
+  width: 300px;
+  margin-right: 300px;
+    text-align: flex-start;
+    justify-content: center;
+    letter-spacing: -0.01em;
+    position: relative;
+    -webkit-transition: -webkit-transform 0.2s ease;
+    transition: -webkit-transform 0.2s ease;
+    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, -webkit-transform 0.2s ease;
+}
+.project-box__image:hover {
+    z-index: 5;
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
+}
+.project-box__image__sleeve {
+  height: 300px; 
+  width: 300px;
+    position: relative;
+    z-index: 3;
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.35);
+    -webkit-transition: -webkit-transform 0.3s ease;
+    transition: -webkit-transform 0.3s ease;
+    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.project-box__image__vinyl {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: -webkit-transform 0.3s ease;
+    transition: -webkit-transform 0.3s ease;
+    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.project-box__image:hover .project-box__image__vinyl {
+    -webkit-transform: translateX(300px);
+    transform: translateX(300px);
+}
+
+
+/* play btn in vinyl */
+
+/* .vinyl-container {
+  position: relative;
+  width: 100%; /* Set width to match the vinyl image */
+  /* height: 100%; Set height to match the vinyl image */
+/* } */ 
+
+.vinyl-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.project-box__image__vinyl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+ 
+
+  
+}
+
+
+.project-box__image:hover .play-btn {
+  transform: translateX(300px);
+}
+
+.play-btn {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px black solid;
+  left: 33%;
+  top: 33%;
+  z-index: 2;
+  transition: transform 0.3s ease; /* Apply the same transition as the vinyl image */
+  cursor: pointer;
+}
+
+.spinning {
+  
+  transform: translateX(300px);
+  animation: rotation 2s linear infinite; 
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+
+.thumbnail-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  gap: 10px; 
+}
+
+.thumbnail {
+  height: 100px; 
+  width: 100px; 
+  opacity: 0.6;
+}
+
+.thumbnail:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.thumbnail-active {
+  height: 100px; 
+  width: 100px; 
+  opacity: 1;
+}
+
+
+.review-container {
+margin-top: 20px;
+width: 60%;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
