@@ -32,6 +32,15 @@
   display: flex;
 }
 
+/* shop toggle btns */  
+
+.active-btn {
+
+}
+
+.disabled-btn {
+  
+}
 
 
 
@@ -49,6 +58,14 @@
 
   .catch-log-container {
     width: 20vw;
+    max-height: 40vh;
+    
+  }
+
+  .catch-log-messages {
+  overflow: scroll;
+  max-height: 100%;
+  
   }
 
   

@@ -61,6 +61,7 @@ export default function Shop ( {players, setPlayers}) {
 
 
     return (
+        
         <div className="shop-container">
             <h2>Crabbing Supply Store - Click to buy cards!</h2>
             <div className="shop-cards-container">

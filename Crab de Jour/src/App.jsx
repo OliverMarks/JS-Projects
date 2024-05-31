@@ -60,6 +60,7 @@ function App() {
       // round state
       // controller component 
 
+  const [roundNumber, setRoundNumber] = useState(1)
   const [activePools, setActivePools] = useState([1, 2, 3, 4, 5, 6])
 
 
@@ -83,11 +84,14 @@ function App() {
 
       <div className='header-btn-container'>    
       
-      <button onClick={() => setDisplayToggle('rockpool')}>  
+      <button onClick={() => setDisplayToggle('rockpool')}
+      className={displayToggle === 'rockpool' ? "disabled-btn" : "active-btn"}
+      >  
       See Rockpools
       </button>
 
-      <button onClick={() => setDisplayToggle('shop')}>  
+      <button onClick={() => setDisplayToggle('shop')}
+      className={displayToggle === 'shop' ? "disabled-btn" : "active-btn"}>  
       See Shop 
       </button>
 
@@ -98,6 +102,8 @@ function App() {
     setPlayers={setPlayers}
     hasCaught={hasCaught}
     setHasCaught={setHasCaught}
+    roundNumber={roundNumber}
+    setRoundNumber={setRoundNumber}
     
     />
       

@@ -9,7 +9,6 @@ export default function Rockpool ({players, setPlayers, activePools} ) {
 
     const addToPlayerSelectedPool = (pool) => {
 
-        if (players.selectedPools
 
         if (players.selectedPools.length === 2 ) {
             return alert('max number of selections made')

@@ -7,7 +7,7 @@ export default function PlayerHand ({players, setPlayers, locked}) {
     
     // TODO 
     // Remove active cards back down to held cards once clicked?
-    
+    // once the player has crabbed they should not be allowed to add cards to active otherwise they will lose them when going to nxt round
 
 
     const playCard = (card) => {
@@ -67,10 +67,15 @@ export default function PlayerHand ({players, setPlayers, locked}) {
                 /> ))}
 
                 
+
+                
                
             </div>
             
-            
+            Crab Orders
+                <div className="playerHand-orders">
+                  
+                  </div>
    
         </div>
         

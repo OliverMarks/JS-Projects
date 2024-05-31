@@ -9,15 +9,15 @@ export default function CatchLog ({players}) {
 
 return (
 
-        
-  
-            <div>
-             <h2>  Crab Log </h2>
+        <>
+    <h2>  Crab Log </h2>
+
+            <div className="catch-log-messages">
             {players.catchLog.map((entry, idx) => (
              <p key={idx}>{entry}</p>
             ))}
             </div>
-    
+    </>
 
 )
 
